@@ -30,7 +30,7 @@ The whole accent scale (including hover/pressed interaction states) derives from
 }
 ```
 
-`--accent-hover` and `--accent-pressed` are computed from `--accent` via `color-mix()`, so overriding just this one property re-tints every button, focus ring, link, and active-state indicator in the framework consistently. If you need exact hover/pressed values instead of the computed ones, override those two as well:
+`--accent-hover` and `--accent-pressed` are computed from `--accent` via `color-mix()`, so overriding just this one property re-tints every button, focus ring, link, active-state indicator, and the `.fluent-gradient--brand` section background in the framework consistently. If you need exact hover/pressed values instead of the computed ones, override those two as well:
 
 ```css
 :root {

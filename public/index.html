@@ -174,6 +174,11 @@
       .card-row .fluent-card {
         width: 220px;
       }
+      .gradient-demo {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-l, 16px);
+      }
       .alert-stack {
         display: flex;
         flex-direction: column;
@@ -234,6 +239,7 @@
       <h3>Surfaces</h3>
       <ul>
         <li><a href="#card">Card</a></li>
+        <li><a href="#gradients">Gradients</a></li>
         <li><a href="#dialog-panel">Dialog &amp; panel</a></li>
         <li><a href="#tooltip">Tooltip</a></li>
       </ul>
@@ -587,6 +593,105 @@
 &lt;/div&gt;
 
 &lt;!-- add fluent-card--interactive for hover elevation --&gt;</code></pre>
+      </section>
+
+      <section id="gradients">
+        <h2>Gradients</h2>
+        <p>
+          Reusable gradient backgrounds for section surfaces (Light pillar).
+          Cards float on top via their own opaque background and shadow, so
+          they stay legible regardless of which gradient variant sits
+          behind them.
+        </p>
+        <div class="gradient-demo">
+          <div>
+            <p class="fluent-hint">Default — <code>.fluent-gradient</code></p>
+            <div class="fluent-gradient">
+              <div class="card-row">
+                <div class="fluent-card">
+                  <h3 class="fluent-card__header">Team update</h3>
+                  <p>Dummy card content to demo a gradient section background.</p>
+                </div>
+                <div class="fluent-card fluent-card--interactive">
+                  <h3 class="fluent-card__header">Interactive card</h3>
+                  <p>Hover this one — elevation increases on hover.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <p class="fluent-hint">Brand — <code>.fluent-gradient--brand</code></p>
+            <div class="fluent-gradient fluent-gradient--brand">
+              <div class="card-row">
+                <div class="fluent-card">
+                  <h3 class="fluent-card__header">Team update</h3>
+                  <p>Dummy card content to demo a gradient section background.</p>
+                </div>
+                <div class="fluent-card fluent-card--interactive">
+                  <h3 class="fluent-card__header">Interactive card</h3>
+                  <p>Hover this one — elevation increases on hover.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <p class="fluent-hint">Success — <code>.fluent-gradient--success</code></p>
+            <div class="fluent-gradient fluent-gradient--success">
+              <div class="card-row">
+                <div class="fluent-card">
+                  <h3 class="fluent-card__header">Team update</h3>
+                  <p>Dummy card content to demo a gradient section background.</p>
+                </div>
+                <div class="fluent-card fluent-card--interactive">
+                  <h3 class="fluent-card__header">Interactive card</h3>
+                  <p>Hover this one — elevation increases on hover.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <p class="fluent-hint">Warning — <code>.fluent-gradient--warning</code></p>
+            <div class="fluent-gradient fluent-gradient--warning">
+              <div class="card-row">
+                <div class="fluent-card">
+                  <h3 class="fluent-card__header">Team update</h3>
+                  <p>Dummy card content to demo a gradient section background.</p>
+                </div>
+                <div class="fluent-card fluent-card--interactive">
+                  <h3 class="fluent-card__header">Interactive card</h3>
+                  <p>Hover this one — elevation increases on hover.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <p class="fluent-hint">Danger — <code>.fluent-gradient--danger</code></p>
+            <div class="fluent-gradient fluent-gradient--danger">
+              <div class="card-row">
+                <div class="fluent-card">
+                  <h3 class="fluent-card__header">Team update</h3>
+                  <p>Dummy card content to demo a gradient section background.</p>
+                </div>
+                <div class="fluent-card fluent-card--interactive">
+                  <h3 class="fluent-card__header">Interactive card</h3>
+                  <p>Hover this one — elevation increases on hover.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <pre class="doc-snippet"><code>&lt;div class="fluent-gradient fluent-gradient--brand"&gt;
+  &lt;div class="fluent-card"&gt;
+    &lt;h3 class="fluent-card__header"&gt;Title&lt;/h3&gt;
+    &lt;p&gt;Body content.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- variants: (none) / --brand / --success / --warning / --danger --&gt;</code></pre>
       </section>
 
       <section id="dialog-panel">

@@ -1,0 +1,63 @@
+/*
+ * .fluent-gradient — a soft, fluid section-background wash styled after
+ * the Windows 11 setup/OOBE screens: one seamless diagonal blend (a
+ * two-stop linear-gradient, close-value stops so the transition reads as
+ * smooth light-to-slightly-deeper tone rather than a visible band) plus a
+ * soft corner highlight (Light pillar: a gentle glow, not a spotlight).
+ * The highlight uses radial-gradient()'s default "farthest-corner" sizing
+ * so its fade-to-transparent edge lands exactly at the box's far corner —
+ * never inside it — which is what keeps it reading as ambient light
+ * rather than a visible circular "blob" silhouette.
+ *
+ * Meant to sit *behind* content such as .fluent-card elements, not to
+ * have text placed directly on top of it — these hues aren't
+ * contrast-checked as a text backdrop, only as a backdrop behind opaque,
+ * self-contrasted surfaces like cards.
+ *
+ * Same variant pattern as .fluent-badge/.fluent-alert: a single
+ * --gradient-color custom property drives every stop below, so a
+ * --variant only overrides that one value.
+ *
+ * Angle/stop percentages/highlight strength are a Light-pillar
+ * approximation of the Windows 11 setup aesthetic — no exact Fluent 2
+ * gradient token exists to verify against. Revisit if official values
+ * surface.
+ *
+ * No dark-theme override block: color-mix() re-resolves against whatever
+ * --color-neutral-bg-1 currently is, so the wash re-tints itself
+ * automatically when the theme flips (same reasoning as .fluent-alert's
+ * tint, which also has no dark-mode block).
+ */
+
+.fluent-gradient {
+  --gradient-color: var(--color-neutral-foreground-3);
+  padding: var(--spacing-xxl);
+  border-radius: var(--radius-large);
+  background:
+    radial-gradient(
+      circle at 12% 8%,
+      color-mix(in srgb, white 30%, transparent) 0%,
+      transparent 60%
+    ),
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--gradient-color) 10%, var(--color-neutral-bg-1)) 0%,
+      color-mix(in srgb, var(--gradient-color) 30%, var(--color-neutral-bg-1)) 100%
+    );
+}
+
+.fluent-gradient--brand {
+  --gradient-color: var(--accent);
+}
+
+.fluent-gradient--success {
+  --gradient-color: var(--color-success);
+}
+
+.fluent-gradient--warning {
+  --gradient-color: var(--color-warning);
+}
+
+.fluent-gradient--danger {
+  --gradient-color: var(--color-danger);
+}
