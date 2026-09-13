@@ -1,0 +1,64 @@
+/*
+ * .fluent-dialog is meant to be applied to a native <dialog>, opened via
+ * dialogEl.showModal(). That one JS call is the only script this
+ * component needs — native <dialog> already provides focus trapping,
+ * Escape-to-close, and top-layer stacking for free.
+ *
+ * The open/close fade+scale uses @starting-style + transition-behavior:
+ * allow-discrete (Baseline ~2024) so it animates with no JS at all.
+ * Unsupported browsers just get an instant show/hide — still fully
+ * functional, verify support if pixel-perfect motion is required here.
+ */
+
+dialog.fluent-dialog {
+  border: none;
+  border-radius: var(--radius-medium);
+  padding: var(--spacing-xxl);
+  width: 90vw;
+  max-width: 480px;
+  background-color: var(--color-neutral-bg-1);
+  color: var(--color-neutral-foreground-1);
+  box-shadow: var(--shadow-64);
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity var(--duration-normal) var(--easing-decelerate),
+    transform var(--duration-normal) var(--easing-decelerate),
+    overlay var(--duration-normal) allow-discrete,
+    display var(--duration-normal) allow-discrete;
+}
+
+dialog.fluent-dialog:not([open]) {
+  opacity: 0;
+  transform: scale(0.95);
+  pointer-events: none;
+}
+
+@starting-style {
+  dialog.fluent-dialog[open] {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+dialog.fluent-dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+}
+
+.fluent-dialog__title {
+  margin: 0 0 var(--spacing-m) 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-title3);
+  font-weight: var(--font-weight-semibold);
+}
+
+.fluent-dialog__body {
+  margin: 0 0 var(--spacing-l) 0;
+  color: var(--color-neutral-foreground-2);
+}
+
+.fluent-dialog__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-s);
+}

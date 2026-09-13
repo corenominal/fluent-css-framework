@@ -1,0 +1,89 @@
+/*
+ * .fluent-alert — variants set the local --alert-color custom property
+ * that the base rule consumes, instead of repeating every declaration
+ * per variant.
+ *
+ * Markup:
+ * <div class="fluent-alert fluent-alert--danger" role="status">
+ *   <span class="fluent-alert__icon" aria-hidden="true">!</span>
+ *   <div class="fluent-alert__content">
+ *     <p class="fluent-alert__title">Title</p>
+ *     <p class="fluent-alert__body">Body text</p>
+ *   </div>
+ *   <button class="fluent-alert__dismiss" aria-label="Dismiss">&times;</button>
+ * </div>
+ */
+
+.fluent-alert {
+  --alert-color: var(--color-info);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-s);
+  padding: var(--spacing-m) var(--spacing-l);
+  border: 1px solid var(--alert-color);
+  border-radius: var(--radius-medium);
+  background-color: color-mix(in srgb, var(--alert-color) 12%, var(--color-neutral-bg-1));
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body1);
+}
+
+.fluent-alert--info {
+  --alert-color: var(--color-info);
+}
+
+.fluent-alert--success {
+  --alert-color: var(--color-success);
+}
+
+.fluent-alert--warning {
+  --alert-color: var(--color-warning);
+}
+
+.fluent-alert--danger {
+  --alert-color: var(--color-danger);
+}
+
+.fluent-alert__icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-circular);
+  background-color: var(--alert-color);
+  color: #ffffff;
+  font-size: var(--font-size-caption1);
+  font-weight: var(--font-weight-bold);
+}
+
+.fluent-alert__content {
+  flex: 1;
+}
+
+.fluent-alert__title {
+  margin: 0 0 var(--spacing-xxs) 0;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-neutral-foreground-1);
+}
+
+.fluent-alert__body {
+  margin: 0;
+  color: var(--color-neutral-foreground-2);
+}
+
+.fluent-alert__dismiss {
+  flex-shrink: 0;
+  padding: var(--spacing-xxs);
+  border: none;
+  border-radius: var(--radius-small);
+  background: none;
+  color: var(--color-neutral-foreground-2);
+  line-height: 1;
+  cursor: pointer;
+}
+
+.fluent-alert__dismiss:hover {
+  background-color: var(--color-neutral-bg-3);
+  color: var(--color-neutral-foreground-1);
+}

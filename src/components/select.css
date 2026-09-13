@@ -1,0 +1,69 @@
+/*
+ * .fluent-select needs a wrapper span so the chevron indicator can be a
+ * decorative ::after on a plain element — browsers don't reliably
+ * render ::after on the <select> itself.
+ *
+ * Markup:
+ * <span class="fluent-select-wrapper">
+ *   <select class="fluent-select">...</select>
+ * </span>
+ */
+
+.fluent-select-wrapper {
+  position: relative;
+  display: block;
+}
+
+.fluent-select-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  inset-inline-end: var(--spacing-m);
+  width: 10px;
+  height: 6px;
+  transform: translateY(-50%);
+  background-color: var(--color-neutral-foreground-2);
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  pointer-events: none;
+}
+
+.fluent-select {
+  display: block;
+  width: 100%;
+  appearance: none;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body1);
+  line-height: var(--line-height-body1);
+  color: var(--color-neutral-foreground-1);
+  background-color: var(--color-neutral-bg-1);
+  border: 1px solid var(--color-neutral-stroke-1);
+  border-radius: var(--radius-small);
+  padding-block: var(--spacing-s-nudge);
+  padding-inline-start: var(--spacing-m);
+  padding-inline-end: var(--spacing-xxl);
+  transition: border-color var(--duration-fast) var(--easing-standard);
+}
+
+.fluent-select:hover {
+  border-color: var(--color-neutral-stroke-2);
+}
+
+.fluent-select:focus-visible {
+  border-color: var(--accent);
+}
+
+.fluent-select:disabled {
+  background-color: var(--color-neutral-bg-3);
+  color: var(--color-neutral-foreground-3);
+  cursor: not-allowed;
+}
+
+.fluent-select-wrapper:has(.fluent-select:disabled)::after {
+  opacity: 0.5;
+}
+
+.fluent-select[aria-invalid="true"] {
+  border-color: var(--color-danger);
+}

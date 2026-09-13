@@ -1,0 +1,37 @@
+/* .fluent-table — border-collapse already comes from the global reset (src/base/reset.css). */
+
+.fluent-table {
+  width: 100%;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body1);
+  color: var(--color-neutral-foreground-1);
+}
+
+.fluent-table th,
+.fluent-table td {
+  padding: var(--spacing-s) var(--spacing-m);
+  border-bottom: 1px solid var(--color-neutral-stroke-2);
+  text-align: start;
+}
+
+.fluent-table th {
+  font-size: var(--font-size-caption1);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-neutral-foreground-2);
+}
+
+.fluent-table tbody tr {
+  transition: background-color var(--duration-fast) var(--easing-standard);
+}
+
+.fluent-table tbody tr:hover {
+  background-color: var(--color-neutral-bg-3);
+}
+
+.fluent-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.fluent-table tbody tr[aria-selected="true"] {
+  background-color: color-mix(in srgb, var(--accent) 10%, var(--color-neutral-bg-1));
+}

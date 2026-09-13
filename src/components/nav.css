@@ -1,0 +1,76 @@
+/*
+ * .fluent-nav — a top nav / command bar. Gets the Material pillar's
+ * acrylic treatment (translucent + blurred) since it's meant to sit
+ * above scrolling page content.
+ *
+ * Markup:
+ * <nav class="fluent-nav">
+ *   <span class="fluent-nav__brand">Brand</span>
+ *   <div class="fluent-nav__links">
+ *     <a class="fluent-nav__link fluent-nav__link--active" href="#">Home</a>
+ *     <a class="fluent-nav__link" href="#">Docs</a>
+ *   </div>
+ *   <div class="fluent-nav__actions">...</div>
+ * </nav>
+ */
+
+.fluent-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-l);
+  padding: var(--spacing-s) var(--spacing-l);
+  background-color: color-mix(in srgb, var(--color-neutral-bg-1) 80%, transparent);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--color-neutral-stroke-2);
+}
+
+.fluent-nav__brand {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-subtitle1);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-neutral-foreground-1);
+}
+
+.fluent-nav__links {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-m);
+}
+
+.fluent-nav__link {
+  position: relative;
+  padding: var(--spacing-xs) var(--spacing-s);
+  border-radius: var(--radius-small);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body1);
+  color: var(--color-neutral-foreground-2);
+  text-decoration: none;
+  transition: background-color var(--duration-fast) var(--easing-standard),
+    color var(--duration-fast) var(--easing-standard);
+}
+
+.fluent-nav__link:hover {
+  background-color: var(--color-neutral-bg-3);
+  color: var(--color-neutral-foreground-1);
+}
+
+.fluent-nav__link--active {
+  color: var(--color-link);
+  font-weight: var(--font-weight-semibold);
+}
+
+.fluent-nav__link--active::after {
+  content: "";
+  position: absolute;
+  inset-inline: var(--spacing-s);
+  bottom: -1px;
+  height: 2px;
+  background-color: var(--accent);
+}
+
+.fluent-nav__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-s);
+  margin-inline-start: auto;
+}

@@ -1,0 +1,40 @@
+/*
+ * Type ramp modeled on Fluent 2 (caption -> display). Sizes/line-heights
+ * are approximate — verify against current Fluent 2 type-ramp guidance
+ * before treating them as final.
+ */
+
+:root {
+  --font-family-base: "Segoe UI Variable", "Segoe UI", system-ui, -apple-system,
+    sans-serif;
+  --font-family-monospace: ui-monospace, "Cascadia Code", "Segoe UI Mono",
+    Consolas, "Liberation Mono", Menlo, monospace;
+
+  --font-size-caption2: 10px;
+  --line-height-caption2: 14px;
+  --font-size-caption1: 12px;
+  --line-height-caption1: 16px;
+  --font-size-body1: 14px;
+  --line-height-body1: 20px;
+  --font-size-body2: 16px;
+  --line-height-body2: 22px;
+  --font-size-subtitle2: 16px;
+  --line-height-subtitle2: 22px;
+  --font-size-subtitle1: 20px;
+  --line-height-subtitle1: 26px;
+  --font-size-title3: 20px;
+  --line-height-title3: 26px;
+  --font-size-title2: 24px;
+  --line-height-title2: 32px;
+  --font-size-title1: 28px;
+  --line-height-title1: 36px;
+  --font-size-large-title: 40px;
+  --line-height-large-title: 52px;
+  --font-size-display: 68px;
+  --line-height-display: 92px;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+}

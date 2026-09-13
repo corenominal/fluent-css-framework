@@ -1,0 +1,74 @@
+/*
+ * Structural reset only — no color/type/spacing decisions here, those
+ * live in typography.css and the components that consume tokens.
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+/* Only strip list semantics where role="list" is explicit, so VoiceOver
+   (which drops list semantics from list-style: none otherwise) still
+   announces these as lists. */
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}

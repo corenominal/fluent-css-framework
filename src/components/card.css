@@ -1,0 +1,32 @@
+/* .fluent-card — an elevated surface; --interactive adds hover elevation for clickable cards. */
+
+.fluent-card {
+  background-color: var(--color-neutral-bg-1);
+  border: 1px solid var(--color-neutral-stroke-2);
+  border-radius: var(--radius-medium);
+  padding: var(--spacing-l);
+  box-shadow: var(--shadow-2);
+  transition: box-shadow var(--duration-normal) var(--easing-standard);
+}
+
+.fluent-card--interactive {
+  cursor: pointer;
+}
+
+.fluent-card--interactive:hover {
+  box-shadow: var(--shadow-8);
+}
+
+.fluent-card__header {
+  margin: 0 0 var(--spacing-m) 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-subtitle1);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-neutral-foreground-1);
+}
+
+.fluent-card__footer {
+  margin-top: var(--spacing-m);
+  display: flex;
+  gap: var(--spacing-s);
+}

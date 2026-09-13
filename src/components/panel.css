@@ -1,0 +1,96 @@
+/*
+ * .fluent-panel — same native-<dialog> approach as .fluent-dialog (see
+ * that file), docked to the right in LTR / left in RTL, sliding in via
+ * translateX instead of scaling. The panel surface itself (not just the
+ * backdrop) gets the Material pillar's acrylic treatment: a translucent,
+ * blurred background so the page behind shows through softly.
+ *
+ * Verified bug: Chrome does not reliably resolve logical inset/
+ * border-radius properties (inset-inline-end, border-*-start-radius)
+ * against direction on <dialog> elements — confirmed both that a plain
+ * positioned <div> with identical logical CSS flips correctly under
+ * dir="rtl" while <dialog> does not, AND that <dialog> doesn't reliably
+ * resolve them even in plain default LTR (it isn't a simple "always
+ * physical-right" quirk — it's unreliable in both directions). So this
+ * component uses only physical left/right/border-*-radius properties,
+ * explicit for LTR as the base case and explicitly flipped under
+ * :dir(rtl), rather than trusting logical properties on this element
+ * at all. translateX has the same problem (not direction-aware on its
+ * own), so it gets the same explicit :dir(rtl) treatment.
+ */
+
+dialog.fluent-panel {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: auto;
+  margin: 0;
+  height: 100vh;
+  max-height: 100vh;
+  width: 320px;
+  max-width: 90vw;
+  border: none;
+  border-top-left-radius: var(--radius-large);
+  border-bottom-left-radius: var(--radius-large);
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  padding: var(--spacing-xxl);
+  background-color: color-mix(in srgb, var(--color-neutral-bg-1) 80%, transparent);
+  backdrop-filter: blur(20px);
+  color: var(--color-neutral-foreground-1);
+  box-shadow: var(--shadow-28);
+  transform: translateX(0);
+  transition: transform var(--duration-slow) var(--easing-decelerate),
+    overlay var(--duration-slow) allow-discrete,
+    display var(--duration-slow) allow-discrete;
+}
+
+dialog.fluent-panel:not([open]) {
+  transform: translateX(100%);
+}
+
+dialog.fluent-panel:dir(rtl):not([open]) {
+  transform: translateX(-100%);
+}
+
+dialog.fluent-panel:dir(rtl) {
+  right: auto;
+  left: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: var(--radius-large);
+  border-bottom-right-radius: var(--radius-large);
+}
+
+@starting-style {
+  dialog.fluent-panel[open] {
+    transform: translateX(100%);
+  }
+
+  dialog.fluent-panel:dir(rtl)[open] {
+    transform: translateX(-100%);
+  }
+}
+
+dialog.fluent-panel::backdrop {
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.fluent-panel__title {
+  margin: 0 0 var(--spacing-m) 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-title3);
+  font-weight: var(--font-weight-semibold);
+}
+
+.fluent-panel__body {
+  margin: 0 0 var(--spacing-l) 0;
+  color: var(--color-neutral-foreground-2);
+}
+
+.fluent-panel__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-s);
+}

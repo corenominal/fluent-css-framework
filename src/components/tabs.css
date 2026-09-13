@@ -1,0 +1,51 @@
+/*
+ * .fluent-tabs — [aria-selected="true"] is the primary hook (semantic,
+ * works with no extra class); --active is provided as a class-based
+ * alias for non-ARIA usage.
+ *
+ * Markup:
+ * <div class="fluent-tabs" role="tablist">
+ *   <button class="fluent-tab" role="tab" aria-selected="true">One</button>
+ *   <button class="fluent-tab" role="tab" aria-selected="false">Two</button>
+ * </div>
+ */
+
+.fluent-tabs {
+  display: flex;
+  gap: var(--spacing-m);
+  border-bottom: 1px solid var(--color-neutral-stroke-2);
+}
+
+.fluent-tab {
+  position: relative;
+  background: none;
+  border: none;
+  padding: var(--spacing-s) var(--spacing-s);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body1);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-neutral-foreground-2);
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--easing-standard);
+}
+
+.fluent-tab:hover {
+  color: var(--color-neutral-foreground-1);
+}
+
+.fluent-tab[aria-selected="true"],
+.fluent-tab--active {
+  color: var(--color-neutral-foreground-1);
+  font-weight: var(--font-weight-semibold);
+}
+
+.fluent-tab[aria-selected="true"]::after,
+.fluent-tab--active::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: -1px;
+  height: 2px;
+  border-radius: var(--radius-small) var(--radius-small) 0 0;
+  background-color: var(--accent);
+}

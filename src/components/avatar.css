@@ -1,0 +1,40 @@
+/*
+ * .fluent-avatar — put initials as the element's text content for the
+ * fallback case, or an <img class="fluent-avatar__image"> for a photo.
+ */
+
+.fluent-avatar {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-circular);
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-caption1);
+  font-weight: var(--font-weight-semibold);
+  overflow: hidden;
+  user-select: none;
+}
+
+.fluent-avatar__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fluent-avatar--small {
+  width: 24px;
+  height: 24px;
+  font-size: var(--font-size-caption2);
+}
+
+.fluent-avatar--large {
+  width: 48px;
+  height: 48px;
+  font-size: var(--font-size-body1);
+}

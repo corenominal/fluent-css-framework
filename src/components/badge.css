@@ -1,0 +1,57 @@
+/*
+ * .fluent-badge — the default (neutral) variant is a subtle tinted pill;
+ * the semantic color variants (--brand/--success/--warning/--danger)
+ * use a solid background with white text instead of the same tinted
+ * formula.
+ *
+ * That's not a style choice, it's a contrast fix: measured with the
+ * WCAG formula (see PLAN.md's Stage 10 notes), a semantic hue used as
+ * *text* on its own ~15%-tint-into-background pill fails 4.5:1 in at
+ * least one theme for every one of these colors — light theme is
+ * marginal-to-failing (3.7–4.3:1) and dark theme fails badly (2.7–3.2:1)
+ * regardless of the tint percentage, because these hues are simply too
+ * dark to work as text on an already-dark background. White text on a
+ * solid fill passes comfortably (4.5–5.4:1) in both themes with no
+ * per-theme tuning needed. The neutral default variant doesn't have
+ * this problem (its color already flips light/dark per theme) so it
+ * keeps the tinted-pill look.
+ */
+
+.fluent-badge {
+  --badge-color: var(--color-neutral-foreground-2);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xxs);
+  padding: 2px var(--spacing-s);
+  border-radius: var(--radius-circular);
+  background-color: color-mix(in srgb, var(--badge-color) 15%, var(--color-neutral-bg-1));
+  color: var(--badge-color);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-caption1);
+  line-height: var(--line-height-caption1);
+  font-weight: var(--font-weight-semibold);
+}
+
+.fluent-badge--brand,
+.fluent-badge--success,
+.fluent-badge--warning,
+.fluent-badge--danger {
+  background-color: var(--badge-color);
+  color: #ffffff;
+}
+
+.fluent-badge--brand {
+  --badge-color: var(--accent);
+}
+
+.fluent-badge--success {
+  --badge-color: var(--color-success);
+}
+
+.fluent-badge--warning {
+  --badge-color: var(--color-warning);
+}
+
+.fluent-badge--danger {
+  --badge-color: var(--color-danger);
+}

@@ -1,0 +1,885 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fluent CSS Framework</title>
+    <link rel="stylesheet" href="../dist/fluent.css" />
+    <style>
+      /* Demo-page-only styles; not part of the framework itself. */
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        display: flex;
+        min-height: 100vh;
+        font-family: var(--font-family-base, sans-serif);
+        color: var(--color-neutral-foreground-1, #242424);
+        background: var(--color-neutral-bg-1, #fff);
+      }
+      .docs-sidebar {
+        flex: 0 0 220px;
+        padding: var(--spacing-xl, 20px);
+        border-inline-end: 1px solid var(--color-neutral-stroke-2, #e0e0e0);
+        position: sticky;
+        top: 0;
+        align-self: flex-start;
+        height: 100vh;
+        overflow-y: auto;
+      }
+      .docs-sidebar h3 {
+        margin: var(--spacing-l, 16px) 0 var(--spacing-xs, 4px);
+        font-size: var(--font-size-caption1, 12px);
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: var(--color-neutral-foreground-2, #616161);
+      }
+      .docs-sidebar h3:first-child {
+        margin-top: 0;
+      }
+      .docs-sidebar ul {
+        list-style: none;
+        margin: 0 0 var(--spacing-m, 12px);
+        padding: 0;
+      }
+      .docs-sidebar a {
+        display: block;
+        padding: var(--spacing-xxs, 2px) 0;
+        color: var(--color-neutral-foreground-1, #242424);
+        text-decoration: none;
+        font-size: var(--font-size-body1, 14px);
+      }
+      .docs-sidebar a:hover {
+        color: var(--accent, #0078d4);
+      }
+      .docs-content {
+        flex: 1;
+        min-width: 0;
+        max-width: 900px;
+        padding: var(--spacing-xxl, 24px);
+      }
+      @media (max-width: 720px) {
+        body {
+          flex-direction: column;
+        }
+        .docs-sidebar {
+          position: static;
+          height: auto;
+          border-inline-end: none;
+          border-bottom: 1px solid var(--color-neutral-stroke-2, #e0e0e0);
+        }
+      }
+      section {
+        margin-bottom: var(--spacing-xxxl, 32px);
+      }
+      h2 {
+        font-size: var(--font-size-title2, 24px);
+        font-weight: var(--font-weight-semibold, 600);
+      }
+      h3 {
+        font-size: var(--font-size-subtitle1, 20px);
+        font-weight: var(--font-weight-semibold, 600);
+      }
+      .doc-snippet {
+        margin: var(--spacing-m, 12px) 0 0;
+        padding: var(--spacing-m, 12px);
+        border-radius: var(--radius-medium, 8px);
+        background: var(--color-neutral-bg-2, #fafafa);
+        border: 1px solid var(--color-neutral-stroke-2, #e0e0e0);
+        overflow-x: auto;
+      }
+      .doc-snippet code {
+        font-family: var(--font-family-monospace, monospace);
+        font-size: var(--font-size-caption1, 12px);
+        line-height: 1.6;
+        white-space: pre;
+      }
+      .swatches {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-m, 12px);
+      }
+      .swatch {
+        width: 96px;
+        text-align: center;
+        font-size: var(--font-size-caption1, 12px);
+      }
+      .swatch-fill {
+        height: 64px;
+        border-radius: var(--radius-medium, 8px);
+        border: 1px solid var(--color-neutral-stroke-1, #d1d1d1);
+        margin-bottom: var(--spacing-xxs, 2px);
+      }
+      .type-ramp p {
+        margin: 0 0 var(--spacing-s, 8px);
+        font-family: var(--font-family-base);
+      }
+      .spacing-row {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-s, 8px);
+        margin-bottom: var(--spacing-xs, 4px);
+      }
+      .spacing-bar {
+        height: 12px;
+        background: var(--accent, #0078d4);
+        border-radius: var(--radius-small, 4px);
+      }
+      .elevation-row,
+      .radius-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-xl, 20px);
+      }
+      .elevation-box,
+      .radius-box {
+        width: 96px;
+        height: 64px;
+        background: var(--color-neutral-bg-2, #fafafa);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: var(--font-size-caption1, 12px);
+      }
+      .motion-demo {
+        width: 48px;
+        height: 48px;
+        background: var(--accent, #0078d4);
+        border-radius: var(--radius-medium, 8px);
+        transition: transform var(--duration-normal, 200ms)
+          var(--easing-decelerate, ease);
+      }
+      .motion-demo:hover {
+        transform: translateX(48px);
+      }
+      .button-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-s, 8px);
+      }
+      .form-demo {
+        max-width: 360px;
+      }
+      .radio-group {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-xs, 4px);
+      }
+      .card-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-l, 16px);
+      }
+      .card-row .fluent-card {
+        width: 220px;
+      }
+      .alert-stack {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-m, 12px);
+        max-width: 480px;
+      }
+      .skeleton-demo {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-m, 12px);
+        max-width: 320px;
+      }
+      .skeleton-lines {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-s, 8px);
+      }
+      .list-demo {
+        max-width: 320px;
+      }
+      .theme-controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-s, 8px);
+        margin-bottom: var(--spacing-xxxl, 32px);
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="docs-sidebar" aria-label="Component index">
+      <h3>Getting started</h3>
+      <ul>
+        <li><a href="#getting-started">Getting started</a></li>
+      </ul>
+
+      <h3>Foundations</h3>
+      <ul>
+        <li><a href="#color">Color</a></li>
+        <li><a href="#type-ramp">Type ramp</a></li>
+        <li><a href="#spacing">Spacing</a></li>
+        <li><a href="#elevation">Elevation</a></li>
+        <li><a href="#radius">Radius</a></li>
+        <li><a href="#motion">Motion</a></li>
+      </ul>
+
+      <h3>Base</h3>
+      <ul>
+        <li><a href="#base-elements">Base elements</a></li>
+      </ul>
+
+      <h3>Form controls</h3>
+      <ul>
+        <li><a href="#buttons">Buttons</a></li>
+        <li><a href="#form-controls">Inputs, checkbox, radio, switch, select</a></li>
+      </ul>
+
+      <h3>Surfaces</h3>
+      <ul>
+        <li><a href="#card">Card</a></li>
+        <li><a href="#dialog-panel">Dialog &amp; panel</a></li>
+        <li><a href="#tooltip">Tooltip</a></li>
+      </ul>
+
+      <h3>Navigation</h3>
+      <ul>
+        <li><a href="#nav">Nav</a></li>
+        <li><a href="#tabs">Tabs</a></li>
+        <li><a href="#breadcrumb">Breadcrumb</a></li>
+        <li><a href="#menu">Menu</a></li>
+      </ul>
+
+      <h3>Feedback &amp; status</h3>
+      <ul>
+        <li><a href="#alerts">Alerts</a></li>
+        <li><a href="#progress-spinner">Progress &amp; spinner</a></li>
+        <li><a href="#badges">Badges</a></li>
+        <li><a href="#skeleton">Skeleton</a></li>
+      </ul>
+
+      <h3>Data display</h3>
+      <ul>
+        <li><a href="#table">Table</a></li>
+        <li><a href="#list">List</a></li>
+        <li><a href="#avatar">Avatar</a></li>
+      </ul>
+    </nav>
+
+    <main class="docs-content">
+      <h1>Fluent CSS Framework</h1>
+      <p>
+        This page is the living style guide and component reference: as
+        tokens and components are built out (see
+        <a href="../PLAN.md">PLAN.md</a>), add a demo section for each one
+        here. It automatically follows your OS light/dark setting; add
+        <code>data-theme="dark"</code> or <code>data-theme="light"</code>
+        on <code>&lt;html&gt;</code> to force a theme. See
+        <a href="../README.md">README.md</a> for the full
+        theming/rebranding guide.
+      </p>
+
+      <section class="theme-controls">
+        <button type="button" class="fluent-btn fluent-btn--secondary" onclick="document.documentElement.removeAttribute('data-theme')">System theme</button>
+        <button type="button" class="fluent-btn fluent-btn--secondary" onclick="document.documentElement.dataset.theme='light'">Force light</button>
+        <button type="button" class="fluent-btn fluent-btn--secondary" onclick="document.documentElement.dataset.theme='dark'">Force dark</button>
+        <button type="button" class="fluent-btn fluent-btn--secondary" onclick="document.documentElement.dir = document.documentElement.dir === 'rtl' ? 'ltr' : 'rtl'">Toggle RTL</button>
+      </section>
+
+      <section id="getting-started">
+        <h2>Getting started</h2>
+        <p>
+          This framework ships as plain CSS with no required build step to
+          consume it. Until it's published to npm (see PLAN.md's
+          Stage 10), include it by building and copying the compiled file
+          into your own project:
+        </p>
+        <ol>
+          <li>Run <code>npm run build:min</code> in this repo.</li>
+          <li>Copy <code>dist/fluent.min.css</code> into your project.</li>
+          <li>Link it in your HTML <code>&lt;head&gt;</code>, before any of your own stylesheet overrides.</li>
+        </ol>
+        <pre class="doc-snippet"><code>&lt;link rel="stylesheet" href="fluent.min.css" /&gt;</code></pre>
+        <p>
+          Every class is prefixed <code>fluent-</code> so it can coexist
+          with an existing project's CSS. Each section below has copyable
+          markup for that component.
+        </p>
+      </section>
+
+      <section id="color">
+        <h2>Color</h2>
+        <div class="swatches">
+          <div class="swatch">
+            <div
+              class="swatch-fill"
+              style="background: var(--accent)"
+            ></div>
+            accent
+          </div>
+          <div class="swatch">
+            <div
+              class="swatch-fill"
+              style="background: var(--accent-hover)"
+            ></div>
+            accent-hover
+          </div>
+          <div class="swatch">
+            <div
+              class="swatch-fill"
+              style="background: var(--accent-pressed)"
+            ></div>
+            accent-pressed
+          </div>
+          <div class="swatch">
+            <div
+              class="swatch-fill"
+              style="background: var(--color-success)"
+            ></div>
+            success
+          </div>
+          <div class="swatch">
+            <div
+              class="swatch-fill"
+              style="background: var(--color-warning)"
+            ></div>
+            warning
+          </div>
+          <div class="swatch">
+            <div
+              class="swatch-fill"
+              style="background: var(--color-danger)"
+            ></div>
+            danger
+          </div>
+          <div class="swatch">
+            <div
+              class="swatch-fill"
+              style="background: var(--color-neutral-bg-2)"
+            ></div>
+            neutral-bg-2
+          </div>
+          <div class="swatch">
+            <div
+              class="swatch-fill"
+              style="background: var(--color-neutral-bg-3)"
+            ></div>
+            neutral-bg-3
+          </div>
+        </div>
+      </section>
+
+      <section id="type-ramp" class="type-ramp">
+        <h2>Type ramp</h2>
+        <p style="font-size: var(--font-size-caption2); line-height: var(--line-height-caption2)">Caption2 — the quick brown fox</p>
+        <p style="font-size: var(--font-size-caption1); line-height: var(--line-height-caption1)">Caption1 — the quick brown fox</p>
+        <p style="font-size: var(--font-size-body1); line-height: var(--line-height-body1)">Body1 — the quick brown fox</p>
+        <p style="font-size: var(--font-size-body2); line-height: var(--line-height-body2)">Body2 — the quick brown fox</p>
+        <p style="font-size: var(--font-size-subtitle1); font-weight: var(--font-weight-semibold); line-height: var(--line-height-subtitle1)">Subtitle1 — the quick brown fox</p>
+        <p style="font-size: var(--font-size-title2); font-weight: var(--font-weight-semibold); line-height: var(--line-height-title2)">Title2 — the quick brown fox</p>
+        <p style="font-size: var(--font-size-title1); font-weight: var(--font-weight-semibold); line-height: var(--line-height-title1)">Title1 — the quick brown fox</p>
+        <p style="font-size: var(--font-size-large-title); font-weight: var(--font-weight-semibold); line-height: var(--line-height-large-title)">Large Title</p>
+      </section>
+
+      <section id="spacing">
+        <h2>Spacing</h2>
+        <div class="spacing-row"><span class="spacing-bar" style="width: var(--spacing-xxs)"></span> xxs (2px)</div>
+        <div class="spacing-row"><span class="spacing-bar" style="width: var(--spacing-xs)"></span> xs (4px)</div>
+        <div class="spacing-row"><span class="spacing-bar" style="width: var(--spacing-s)"></span> s (8px)</div>
+        <div class="spacing-row"><span class="spacing-bar" style="width: var(--spacing-m)"></span> m (12px)</div>
+        <div class="spacing-row"><span class="spacing-bar" style="width: var(--spacing-l)"></span> l (16px)</div>
+        <div class="spacing-row"><span class="spacing-bar" style="width: var(--spacing-xl)"></span> xl (20px)</div>
+        <div class="spacing-row"><span class="spacing-bar" style="width: var(--spacing-xxl)"></span> xxl (24px)</div>
+        <div class="spacing-row"><span class="spacing-bar" style="width: var(--spacing-xxxl)"></span> xxxl (32px)</div>
+      </section>
+
+      <section id="elevation">
+        <h2>Elevation</h2>
+        <div class="elevation-row">
+          <div class="elevation-box" style="box-shadow: var(--shadow-2)">shadow-2</div>
+          <div class="elevation-box" style="box-shadow: var(--shadow-4)">shadow-4</div>
+          <div class="elevation-box" style="box-shadow: var(--shadow-8)">shadow-8</div>
+          <div class="elevation-box" style="box-shadow: var(--shadow-16)">shadow-16</div>
+          <div class="elevation-box" style="box-shadow: var(--shadow-28)">shadow-28</div>
+          <div class="elevation-box" style="box-shadow: var(--shadow-64)">shadow-64</div>
+        </div>
+      </section>
+
+      <section id="radius">
+        <h2>Radius</h2>
+        <div class="radius-row">
+          <div class="radius-box" style="border: 1px solid var(--color-neutral-stroke-1); border-radius: var(--radius-none)">none</div>
+          <div class="radius-box" style="border: 1px solid var(--color-neutral-stroke-1); border-radius: var(--radius-small)">small</div>
+          <div class="radius-box" style="border: 1px solid var(--color-neutral-stroke-1); border-radius: var(--radius-medium)">medium</div>
+          <div class="radius-box" style="border: 1px solid var(--color-neutral-stroke-1); border-radius: var(--radius-large)">large</div>
+          <div class="radius-box" style="border: 1px solid var(--color-neutral-stroke-1); border-radius: var(--radius-circular)">circular</div>
+        </div>
+      </section>
+
+      <section id="motion">
+        <h2>Motion</h2>
+        <p>Hover the box — respects <code>prefers-reduced-motion</code>.</p>
+        <div class="motion-demo"></div>
+      </section>
+
+      <section id="base-elements">
+        <h2>Base elements</h2>
+        <p>
+          Base styles applied straight from the tokens above — this
+          paragraph, the <a href="#">link inline here</a>, and the list
+          below all come from <code>src/base/typography.css</code> with no
+          extra classes.
+        </p>
+        <ul>
+          <li>First item</li>
+          <li>Second item</li>
+          <li>Third item, with <code>inline code</code></li>
+        </ul>
+        <p>
+          Tab to this button to see the focus ring:
+          <button type="button">Focus me</button>
+        </p>
+        <pre class="doc-snippet"><code>&lt;p&gt;A paragraph.&lt;/p&gt;
+&lt;a href="#"&gt;A link.&lt;/a&gt;
+&lt;ul&gt;
+  &lt;li&gt;A list item.&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+      </section>
+
+      <section id="buttons">
+        <h2>Buttons</h2>
+        <div class="button-row">
+          <button type="button" class="fluent-btn fluent-btn--primary">Primary</button>
+          <button type="button" class="fluent-btn fluent-btn--secondary">Secondary</button>
+          <button type="button" class="fluent-btn fluent-btn--subtle">Subtle</button>
+          <button type="button" class="fluent-btn fluent-btn--primary" disabled>Disabled</button>
+        </div>
+        <pre class="doc-snippet"><code>&lt;button class="fluent-btn fluent-btn--primary"&gt;Primary&lt;/button&gt;
+&lt;button class="fluent-btn fluent-btn--secondary"&gt;Secondary&lt;/button&gt;
+&lt;button class="fluent-btn fluent-btn--subtle"&gt;Subtle&lt;/button&gt;</code></pre>
+      </section>
+
+      <section id="form-controls">
+        <h2>Form controls</h2>
+        <form class="form-demo" novalidate>
+          <div class="fluent-field">
+            <label class="fluent-label" for="demo-name">Name</label>
+            <input class="fluent-input" type="text" id="demo-name" placeholder="Jane Doe" />
+            <span class="fluent-hint">As it should appear on your badge.</span>
+          </div>
+
+          <div class="fluent-field">
+            <label class="fluent-label" for="demo-email">Email</label>
+            <input
+              class="fluent-input"
+              type="email"
+              id="demo-email"
+              value="not-an-email"
+              aria-invalid="true"
+              aria-describedby="demo-email-error"
+            />
+            <span class="fluent-error" id="demo-email-error">Enter a valid email address.</span>
+          </div>
+
+          <div class="fluent-field">
+            <label class="fluent-label" for="demo-bio">Bio</label>
+            <textarea class="fluent-textarea" id="demo-bio" placeholder="A few words about you"></textarea>
+          </div>
+
+          <div class="fluent-field">
+            <label class="fluent-label" for="demo-role">Role</label>
+            <span class="fluent-select-wrapper">
+              <select class="fluent-select" id="demo-role">
+                <option>Engineer</option>
+                <option>Designer</option>
+                <option>Product manager</option>
+              </select>
+            </span>
+          </div>
+
+          <div class="fluent-field">
+            <label class="fluent-checkbox">
+              <input type="checkbox" class="fluent-checkbox__input" checked />
+              <span class="fluent-checkbox__box"></span>
+              <span class="fluent-checkbox__label">Subscribe to updates</span>
+            </label>
+          </div>
+
+          <div class="fluent-field radio-group">
+            <span class="fluent-label">Plan</span>
+            <label class="fluent-radio">
+              <input type="radio" name="demo-plan" class="fluent-radio__input" checked />
+              <span class="fluent-radio__circle"></span>
+              <span class="fluent-radio__label">Personal</span>
+            </label>
+            <label class="fluent-radio">
+              <input type="radio" name="demo-plan" class="fluent-radio__input" />
+              <span class="fluent-radio__circle"></span>
+              <span class="fluent-radio__label">Team</span>
+            </label>
+          </div>
+
+          <div class="fluent-field">
+            <label class="fluent-switch">
+              <input type="checkbox" role="switch" class="fluent-switch__input" checked />
+              <span class="fluent-switch__track"></span>
+              <span class="fluent-switch__label">Enable notifications</span>
+            </label>
+          </div>
+        </form>
+
+        <h3 id="form-controls-text-input">Text input &amp; textarea</h3>
+        <pre class="doc-snippet"><code>&lt;div class="fluent-field"&gt;
+  &lt;label class="fluent-label" for="name"&gt;Name&lt;/label&gt;
+  &lt;input class="fluent-input" type="text" id="name" /&gt;
+  &lt;span class="fluent-hint"&gt;Optional hint text.&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;textarea class="fluent-textarea"&gt;&lt;/textarea&gt;</code></pre>
+
+        <h3 id="form-controls-select">Select</h3>
+        <pre class="doc-snippet"><code>&lt;span class="fluent-select-wrapper"&gt;
+  &lt;select class="fluent-select"&gt;
+    &lt;option&gt;Engineer&lt;/option&gt;
+  &lt;/select&gt;
+&lt;/span&gt;</code></pre>
+
+        <h3 id="form-controls-checkbox">Checkbox</h3>
+        <pre class="doc-snippet"><code>&lt;label class="fluent-checkbox"&gt;
+  &lt;input type="checkbox" class="fluent-checkbox__input" /&gt;
+  &lt;span class="fluent-checkbox__box"&gt;&lt;/span&gt;
+  &lt;span class="fluent-checkbox__label"&gt;Subscribe to updates&lt;/span&gt;
+&lt;/label&gt;</code></pre>
+
+        <h3 id="form-controls-radio">Radio</h3>
+        <pre class="doc-snippet"><code>&lt;label class="fluent-radio"&gt;
+  &lt;input type="radio" name="plan" class="fluent-radio__input" /&gt;
+  &lt;span class="fluent-radio__circle"&gt;&lt;/span&gt;
+  &lt;span class="fluent-radio__label"&gt;Personal&lt;/span&gt;
+&lt;/label&gt;</code></pre>
+
+        <h3 id="form-controls-switch">Switch</h3>
+        <pre class="doc-snippet"><code>&lt;label class="fluent-switch"&gt;
+  &lt;input type="checkbox" role="switch" class="fluent-switch__input" /&gt;
+  &lt;span class="fluent-switch__track"&gt;&lt;/span&gt;
+  &lt;span class="fluent-switch__label"&gt;Enable notifications&lt;/span&gt;
+&lt;/label&gt;</code></pre>
+      </section>
+
+      <section id="card">
+        <h2>Card</h2>
+        <div class="card-row">
+          <div class="fluent-card">
+            <h3 class="fluent-card__header">Static card</h3>
+            <p>Cards are a resting elevated surface for grouping content.</p>
+          </div>
+          <div class="fluent-card fluent-card--interactive">
+            <h3 class="fluent-card__header">Interactive card</h3>
+            <p>Hover this one — elevation increases on hover.</p>
+            <div class="fluent-card__footer">
+              <button type="button" class="fluent-btn fluent-btn--secondary">Dismiss</button>
+              <button type="button" class="fluent-btn fluent-btn--primary">Open</button>
+            </div>
+          </div>
+        </div>
+        <pre class="doc-snippet"><code>&lt;div class="fluent-card"&gt;
+  &lt;h3 class="fluent-card__header"&gt;Title&lt;/h3&gt;
+  &lt;p&gt;Body content.&lt;/p&gt;
+  &lt;div class="fluent-card__footer"&gt;
+    &lt;button class="fluent-btn fluent-btn--primary"&gt;Open&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- add fluent-card--interactive for hover elevation --&gt;</code></pre>
+      </section>
+
+      <section id="dialog-panel">
+        <h2>Dialog &amp; panel</h2>
+        <div class="button-row">
+          <button type="button" class="fluent-btn fluent-btn--primary" onclick="document.getElementById('demo-dialog').showModal()">Open dialog</button>
+          <button type="button" class="fluent-btn fluent-btn--secondary" onclick="document.getElementById('demo-panel').showModal()">Open panel</button>
+        </div>
+
+        <dialog id="demo-dialog" class="fluent-dialog">
+          <h3 class="fluent-dialog__title">Delete item?</h3>
+          <p class="fluent-dialog__body">This can't be undone. The item will be permanently removed.</p>
+          <div class="fluent-dialog__actions">
+            <button type="button" class="fluent-btn fluent-btn--secondary" onclick="document.getElementById('demo-dialog').close()">Cancel</button>
+            <button type="button" class="fluent-btn fluent-btn--primary" onclick="document.getElementById('demo-dialog').close()">Delete</button>
+          </div>
+        </dialog>
+
+        <dialog id="demo-panel" class="fluent-panel">
+          <h3 class="fluent-panel__title">Settings</h3>
+          <p class="fluent-panel__body">Panels dock to an edge and use an acrylic (translucent, blurred) surface — try it over the colorful content above.</p>
+          <div class="fluent-panel__actions">
+            <button type="button" class="fluent-btn fluent-btn--secondary" onclick="document.getElementById('demo-panel').close()">Close</button>
+          </div>
+        </dialog>
+
+        <pre class="doc-snippet"><code>&lt;dialog id="my-dialog" class="fluent-dialog"&gt;
+  &lt;h3 class="fluent-dialog__title"&gt;Delete item?&lt;/h3&gt;
+  &lt;p class="fluent-dialog__body"&gt;This can't be undone.&lt;/p&gt;
+  &lt;div class="fluent-dialog__actions"&gt;
+    &lt;button onclick="myDialog.close()"&gt;Cancel&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/dialog&gt;
+
+&lt;script&gt;
+  document.getElementById("my-dialog").showModal();
+&lt;/script&gt;
+
+&lt;!-- .fluent-panel uses the same &lt;dialog&gt;+showModal() pattern,
+     docked to an edge instead of centered --&gt;</code></pre>
+      </section>
+
+      <section id="tooltip">
+        <h2>Tooltip</h2>
+        <span class="fluent-tooltip-wrapper">
+          <button type="button" class="fluent-btn fluent-btn--secondary">Hover or focus me</button>
+          <span class="fluent-tooltip" role="tooltip">Helpful extra context</span>
+        </span>
+        <pre class="doc-snippet"><code>&lt;span class="fluent-tooltip-wrapper"&gt;
+  &lt;button&gt;Trigger&lt;/button&gt;
+  &lt;span class="fluent-tooltip" role="tooltip"&gt;Helpful extra context&lt;/span&gt;
+&lt;/span&gt;</code></pre>
+      </section>
+
+      <section id="nav">
+        <h2>Nav</h2>
+        <nav class="fluent-nav">
+          <span class="fluent-nav__brand">Fluent</span>
+          <div class="fluent-nav__links">
+            <a class="fluent-nav__link fluent-nav__link--active" href="#">Home</a>
+            <a class="fluent-nav__link" href="#">Docs</a>
+            <a class="fluent-nav__link" href="#">Components</a>
+          </div>
+          <div class="fluent-nav__actions">
+            <button type="button" class="fluent-btn fluent-btn--primary">Sign in</button>
+          </div>
+        </nav>
+        <pre class="doc-snippet"><code>&lt;nav class="fluent-nav"&gt;
+  &lt;span class="fluent-nav__brand"&gt;Brand&lt;/span&gt;
+  &lt;div class="fluent-nav__links"&gt;
+    &lt;a class="fluent-nav__link fluent-nav__link--active" href="#"&gt;Home&lt;/a&gt;
+    &lt;a class="fluent-nav__link" href="#"&gt;Docs&lt;/a&gt;
+  &lt;/div&gt;
+  &lt;div class="fluent-nav__actions"&gt;
+    &lt;button class="fluent-btn fluent-btn--primary"&gt;Sign in&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;</code></pre>
+      </section>
+
+      <section id="tabs">
+        <h2>Tabs</h2>
+        <div class="fluent-tabs" role="tablist">
+          <button type="button" class="fluent-tab" role="tab" aria-selected="true">Overview</button>
+          <button type="button" class="fluent-tab" role="tab" aria-selected="false">Activity</button>
+          <button type="button" class="fluent-tab" role="tab" aria-selected="false">Settings</button>
+        </div>
+        <pre class="doc-snippet"><code>&lt;div class="fluent-tabs" role="tablist"&gt;
+  &lt;button class="fluent-tab" role="tab" aria-selected="true"&gt;Overview&lt;/button&gt;
+  &lt;button class="fluent-tab" role="tab" aria-selected="false"&gt;Activity&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+      </section>
+
+      <section id="breadcrumb">
+        <h2>Breadcrumb</h2>
+        <nav class="fluent-breadcrumb" aria-label="Breadcrumb">
+          <ol role="list">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Library</a></li>
+            <li aria-current="page">Document</li>
+          </ol>
+        </nav>
+        <pre class="doc-snippet"><code>&lt;nav class="fluent-breadcrumb" aria-label="Breadcrumb"&gt;
+  &lt;ol role="list"&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Home&lt;/a&gt;&lt;/li&gt;
+    &lt;li aria-current="page"&gt;Document&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/nav&gt;</code></pre>
+      </section>
+
+      <section id="menu">
+        <h2>Menu</h2>
+        <details class="fluent-menu">
+          <summary class="fluent-menu__trigger fluent-btn fluent-btn--secondary">Options</summary>
+          <div class="fluent-menu__list">
+            <a class="fluent-menu__item" href="#">Edit</a>
+            <a class="fluent-menu__item" href="#">Duplicate</a>
+            <hr class="fluent-menu__divider" />
+            <a class="fluent-menu__item fluent-menu__item--danger" href="#">Delete</a>
+          </div>
+        </details>
+        <pre class="doc-snippet"><code>&lt;details class="fluent-menu"&gt;
+  &lt;summary class="fluent-menu__trigger fluent-btn fluent-btn--secondary"&gt;Options&lt;/summary&gt;
+  &lt;div class="fluent-menu__list"&gt;
+    &lt;a class="fluent-menu__item" href="#"&gt;Edit&lt;/a&gt;
+    &lt;hr class="fluent-menu__divider" /&gt;
+    &lt;a class="fluent-menu__item fluent-menu__item--danger" href="#"&gt;Delete&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/details&gt;</code></pre>
+      </section>
+
+      <section id="alerts">
+        <h2>Alerts</h2>
+        <div class="alert-stack">
+          <div class="fluent-alert fluent-alert--info" role="status">
+            <span class="fluent-alert__icon" aria-hidden="true">i</span>
+            <div class="fluent-alert__content">
+              <p class="fluent-alert__title">Heads up</p>
+              <p class="fluent-alert__body">A new version of this framework is available.</p>
+            </div>
+            <button type="button" class="fluent-alert__dismiss" aria-label="Dismiss">&times;</button>
+          </div>
+          <div class="fluent-alert fluent-alert--success" role="status">
+            <span class="fluent-alert__icon" aria-hidden="true">&check;</span>
+            <div class="fluent-alert__content">
+              <p class="fluent-alert__title">Saved</p>
+              <p class="fluent-alert__body">Your changes have been saved successfully.</p>
+            </div>
+            <button type="button" class="fluent-alert__dismiss" aria-label="Dismiss">&times;</button>
+          </div>
+          <div class="fluent-alert fluent-alert--warning" role="status">
+            <span class="fluent-alert__icon" aria-hidden="true">!</span>
+            <div class="fluent-alert__content">
+              <p class="fluent-alert__title">Storage almost full</p>
+              <p class="fluent-alert__body">You're using 92% of your available space.</p>
+            </div>
+            <button type="button" class="fluent-alert__dismiss" aria-label="Dismiss">&times;</button>
+          </div>
+          <div class="fluent-alert fluent-alert--danger" role="alert">
+            <span class="fluent-alert__icon" aria-hidden="true">!</span>
+            <div class="fluent-alert__content">
+              <p class="fluent-alert__title">Upload failed</p>
+              <p class="fluent-alert__body">Check your connection and try again.</p>
+            </div>
+            <button type="button" class="fluent-alert__dismiss" aria-label="Dismiss">&times;</button>
+          </div>
+        </div>
+        <pre class="doc-snippet"><code>&lt;div class="fluent-alert fluent-alert--danger" role="alert"&gt;
+  &lt;span class="fluent-alert__icon" aria-hidden="true"&gt;!&lt;/span&gt;
+  &lt;div class="fluent-alert__content"&gt;
+    &lt;p class="fluent-alert__title"&gt;Upload failed&lt;/p&gt;
+    &lt;p class="fluent-alert__body"&gt;Check your connection and try again.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;button class="fluent-alert__dismiss" aria-label="Dismiss"&gt;&amp;times;&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;!-- variants: fluent-alert--info / --success / --warning / --danger --&gt;</code></pre>
+      </section>
+
+      <section id="progress-spinner">
+        <h2>Progress &amp; spinner</h2>
+        <p class="fluent-hint">Determinate progress:</p>
+        <progress class="fluent-progress" value="60" max="100"></progress>
+        <p class="fluent-hint" style="margin-top: var(--spacing-l)">Indeterminate spinner:</p>
+        <div class="fluent-spinner" role="status" aria-label="Loading"></div>
+        <pre class="doc-snippet"><code>&lt;progress class="fluent-progress" value="60" max="100"&gt;&lt;/progress&gt;
+
+&lt;div class="fluent-spinner" role="status" aria-label="Loading"&gt;&lt;/div&gt;</code></pre>
+      </section>
+
+      <section id="badges">
+        <h2>Badges</h2>
+        <div class="button-row">
+          <span class="fluent-badge">Default</span>
+          <span class="fluent-badge fluent-badge--brand">Brand</span>
+          <span class="fluent-badge fluent-badge--success">Success</span>
+          <span class="fluent-badge fluent-badge--warning">Warning</span>
+          <span class="fluent-badge fluent-badge--danger">Danger</span>
+        </div>
+        <pre class="doc-snippet"><code>&lt;span class="fluent-badge fluent-badge--success"&gt;Active&lt;/span&gt;
+
+&lt;!-- variants: (none) / --brand / --success / --warning / --danger --&gt;</code></pre>
+      </section>
+
+      <section id="skeleton">
+        <h2>Skeleton</h2>
+        <div class="skeleton-demo">
+          <div class="fluent-skeleton fluent-skeleton--circle" style="width: 40px; height: 40px;"></div>
+          <div class="skeleton-lines">
+            <div class="fluent-skeleton" style="width: 60%; height: 14px;"></div>
+            <div class="fluent-skeleton" style="width: 90%; height: 14px;"></div>
+          </div>
+        </div>
+        <pre class="doc-snippet"><code>&lt;div class="fluent-skeleton fluent-skeleton--circle" style="width: 40px; height: 40px;"&gt;&lt;/div&gt;
+&lt;div class="fluent-skeleton" style="width: 90%; height: 14px;"&gt;&lt;/div&gt;</code></pre>
+      </section>
+
+      <section id="table">
+        <h2>Table</h2>
+        <table class="fluent-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Role</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Jane Doe</td>
+              <td>Engineer</td>
+              <td><span class="fluent-badge fluent-badge--success">Active</span></td>
+            </tr>
+            <tr aria-selected="true">
+              <td>Alex Kim</td>
+              <td>Designer</td>
+              <td><span class="fluent-badge fluent-badge--success">Active</span></td>
+            </tr>
+            <tr>
+              <td>Sam Patel</td>
+              <td>Product Manager</td>
+              <td><span class="fluent-badge">Away</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <pre class="doc-snippet"><code>&lt;table class="fluent-table"&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;&lt;th&gt;Name&lt;/th&gt;&lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr aria-selected="true"&gt;&lt;td&gt;Alex Kim&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+      </section>
+
+      <section id="list">
+        <h2>List</h2>
+        <ul class="fluent-list list-demo" role="list">
+          <li class="fluent-list-item fluent-list-item--interactive">
+            <span class="fluent-avatar fluent-avatar--small">JD</span>
+            <span class="fluent-list-item__content">Jane Doe</span>
+            <span class="fluent-list-item__meta">2h ago</span>
+          </li>
+          <li class="fluent-list-item fluent-list-item--interactive">
+            <span class="fluent-avatar fluent-avatar--small">AK</span>
+            <span class="fluent-list-item__content">Alex Kim</span>
+            <span class="fluent-list-item__meta">1d ago</span>
+          </li>
+          <li class="fluent-list-item fluent-list-item--interactive">
+            <span class="fluent-avatar fluent-avatar--small">SP</span>
+            <span class="fluent-list-item__content">Sam Patel</span>
+            <span class="fluent-list-item__meta">3d ago</span>
+          </li>
+        </ul>
+        <pre class="doc-snippet"><code>&lt;ul class="fluent-list" role="list"&gt;
+  &lt;li class="fluent-list-item fluent-list-item--interactive"&gt;
+    &lt;span class="fluent-list-item__content"&gt;Jane Doe&lt;/span&gt;
+    &lt;span class="fluent-list-item__meta"&gt;2h ago&lt;/span&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+      </section>
+
+      <section id="avatar">
+        <h2>Avatar</h2>
+        <div class="button-row">
+          <span class="fluent-avatar fluent-avatar--small">JD</span>
+          <span class="fluent-avatar">AK</span>
+          <span class="fluent-avatar fluent-avatar--large">SP</span>
+        </div>
+        <pre class="doc-snippet"><code>&lt;span class="fluent-avatar"&gt;JD&lt;/span&gt;
+
+&lt;!-- sizes: --small / (default) / --large --&gt;
+&lt;!-- or use a photo: &lt;span class="fluent-avatar"&gt;&lt;img class="fluent-avatar__image" src="..." alt="Jane Doe" /&gt;&lt;/span&gt; --&gt;</code></pre>
+      </section>
+    </main>
+  </body>
+</html>

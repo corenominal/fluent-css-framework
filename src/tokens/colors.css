@@ -1,0 +1,97 @@
+/*
+ * Color tokens. --accent is the single source value the rest of the
+ * accent scale derives from (via color-mix()) — rebrand by overriding
+ * just that one custom property.
+ *
+ * Semantic status hues beyond success/danger/brand-blue are approximate;
+ * verify against current Fluent 2 semantic palette guidance before
+ * treating them as final.
+ */
+
+:root {
+  /* accent + derived interaction states (same formula in both themes) —
+     these are tuned for use as a FILL paired with white --accent-foreground
+     text (buttons, filled controls), not as text color directly: on its
+     own, --accent measures only 3.64:1 against the dark-theme page
+     background, well under the 4.5:1 WCAG AA text threshold. Use
+     --color-link below for accent-colored text instead. */
+  --accent: #0078d4;
+  --accent-hover: color-mix(in srgb, var(--accent) 88%, white);
+  --accent-pressed: color-mix(in srgb, var(--accent) 78%, black);
+  --accent-foreground: #ffffff;
+
+  /* Accent-as-*text* (links, nav active state, breadcrumb hover): safe
+     against the page background specifically, unlike --accent above.
+     Light theme can reuse --accent/-hover/-pressed as-is (already
+     4.5:1+ against a white page); dark theme needs lighter,
+     independently-tuned values (see the dark-theme blocks below) since
+     darkening further (the light-theme "more emphasis" direction) would
+     only make dark-background contrast worse. Measured via the WCAG
+     contrast formula — see PLAN.md's Stage 10 notes. */
+  --color-link: var(--accent);
+  --color-link-hover: var(--accent-hover);
+  --color-link-active: var(--accent-pressed);
+
+  /* semantic status */
+  --color-success: #107c10;
+  --color-warning: #9d5d00;
+  --color-danger: #d13438;
+  --color-info: var(--accent);
+
+  /* neutral surfaces/text — light theme (default) */
+  --color-neutral-bg-1: #ffffff;
+  --color-neutral-bg-2: #fafafa;
+  --color-neutral-bg-3: #f5f5f5;
+  --color-neutral-stroke-1: #d1d1d1;
+  --color-neutral-stroke-2: #e0e0e0;
+  --color-neutral-foreground-1: #242424;
+  --color-neutral-foreground-2: #616161;
+  /* #a19f9d measured at only 2.64:1 against bg-1 (white), under the 3:1
+     WCAG floor even for large text/UI components; #8a8a8a clears it
+     (~3.45:1) with a small margin while staying visibly lighter than
+     foreground-2. */
+  --color-neutral-foreground-3: #8a8a8a;
+
+  /* Tooltip is a fixed dark chip in both themes (common convention — it
+     needs to read as an overlay regardless of app theme), not derived
+     from the theme-swapping neutral tokens above. */
+  --color-tooltip-bg: #252423;
+  --color-tooltip-foreground: #ffffff;
+}
+
+/* Dark theme via OS preference, unless explicitly overridden (see below). */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-neutral-bg-1: #1f1f1f;
+    --color-neutral-bg-2: #2b2b2b;
+    --color-neutral-bg-3: #333333;
+    --color-neutral-stroke-1: #3d3d3d;
+    --color-neutral-stroke-2: #484848;
+    --color-neutral-foreground-1: #ffffff;
+    --color-neutral-foreground-2: #c8c8c8;
+    --color-neutral-foreground-3: #8a8a8a;
+
+    /* Lightened accent for text-on-dark-page-background use (links, nav
+       active state, breadcrumb hover) — reusing --accent/-hover/-pressed
+       here would measure 3.64/4.38/2.47:1 against this theme's bg-1, all
+       under the 4.5:1 WCAG AA text threshold. These measure 4.82/5.48/6.25:1. */
+    --color-link: #2e90dc;
+    --color-link-hover: #429bdf;
+    --color-link-active: #57a6e3;
+  }
+}
+
+/* Manual override: set data-theme="dark" or "light" on <html> to force a theme. */
+:root[data-theme="dark"] {
+  --color-neutral-bg-1: #1f1f1f;
+  --color-neutral-bg-2: #2b2b2b;
+  --color-neutral-bg-3: #333333;
+  --color-neutral-stroke-1: #3d3d3d;
+  --color-neutral-stroke-2: #484848;
+  --color-neutral-foreground-1: #ffffff;
+  --color-neutral-foreground-2: #c8c8c8;
+  --color-neutral-foreground-3: #8a8a8a;
+  --color-link: #2e90dc;
+  --color-link-hover: #429bdf;
+  --color-link-active: #57a6e3;
+}

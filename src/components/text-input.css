@@ -1,0 +1,53 @@
+/* .fluent-input (single-line) and .fluent-textarea (multi-line). */
+
+.fluent-input,
+.fluent-textarea {
+  display: block;
+  width: 100%;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body1);
+  line-height: var(--line-height-body1);
+  color: var(--color-neutral-foreground-1);
+  background-color: var(--color-neutral-bg-1);
+  border: 1px solid var(--color-neutral-stroke-1);
+  border-radius: var(--radius-small);
+  padding: var(--spacing-s-nudge) var(--spacing-m);
+  transition: border-color var(--duration-fast) var(--easing-standard);
+}
+
+.fluent-textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.fluent-input::placeholder,
+.fluent-textarea::placeholder {
+  color: var(--color-neutral-foreground-3);
+}
+
+.fluent-input:hover,
+.fluent-textarea:hover {
+  border-color: var(--color-neutral-stroke-2);
+}
+
+.fluent-input:focus-visible,
+.fluent-textarea:focus-visible {
+  border-color: var(--accent);
+}
+
+.fluent-input:disabled,
+.fluent-textarea:disabled {
+  background-color: var(--color-neutral-bg-3);
+  color: var(--color-neutral-foreground-3);
+  cursor: not-allowed;
+}
+
+.fluent-input[aria-invalid="true"],
+.fluent-textarea[aria-invalid="true"] {
+  border-color: var(--color-danger);
+}
+
+.fluent-input[aria-invalid="true"]:focus-visible,
+.fluent-textarea[aria-invalid="true"]:focus-visible {
+  box-shadow: 0 0 0 2px var(--color-neutral-bg-1), 0 0 0 4px var(--color-danger);
+}

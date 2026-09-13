@@ -1,0 +1,86 @@
+/*
+ * .fluent-switch — same hidden-input + custom-visual pattern as
+ * .fluent-checkbox (see that file for the accessibility rationale).
+ * Track is 40x20, thumb 14px with a 3px inset, so it travels 20px.
+ * The thumb travel uses translateX, which isn't direction-aware on its
+ * own, so :dir(rtl) flips it to travel the other way.
+ *
+ * Markup:
+ * <label class="fluent-switch">
+ *   <input type="checkbox" role="switch" class="fluent-switch__input" />
+ *   <span class="fluent-switch__track"></span>
+ *   <span class="fluent-switch__label">Label text</span>
+ * </label>
+ */
+
+.fluent-switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-s);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body1);
+  color: var(--color-neutral-foreground-1);
+  cursor: pointer;
+  user-select: none;
+}
+
+.fluent-switch:has(.fluent-switch__input:disabled) {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.fluent-switch__input {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  inset-inline-start: 0;
+  width: 40px;
+  height: 20px;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.fluent-switch__track {
+  position: relative;
+  flex-shrink: 0;
+  width: 40px;
+  height: 20px;
+  border: 1px solid var(--color-neutral-stroke-1);
+  border-radius: var(--radius-circular);
+  background-color: var(--color-neutral-bg-3);
+  transition: background-color var(--duration-fast) var(--easing-standard),
+    border-color var(--duration-fast) var(--easing-standard);
+}
+
+.fluent-switch__track::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  inset-inline-start: 3px;
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-circular);
+  background-color: var(--color-neutral-foreground-2);
+  transition: transform var(--duration-normal) var(--easing-standard),
+    background-color var(--duration-fast) var(--easing-standard);
+}
+
+.fluent-switch__input:checked ~ .fluent-switch__track {
+  background-color: var(--accent);
+  border-color: var(--accent);
+}
+
+.fluent-switch__input:checked ~ .fluent-switch__track::after {
+  transform: translateX(20px);
+  background-color: var(--accent-foreground);
+}
+
+.fluent-switch:dir(rtl) .fluent-switch__input:checked ~ .fluent-switch__track::after {
+  transform: translateX(-20px);
+}
+
+.fluent-switch__input:focus-visible ~ .fluent-switch__track {
+  box-shadow: 0 0 0 2px var(--color-neutral-bg-1), 0 0 0 4px var(--accent);
+}

@@ -1,0 +1,42 @@
+/*
+ * .fluent-skeleton — a static gray block already communicates "loading
+ * placeholder" on its own, so unlike .fluent-spinner, the shimmer sweep
+ * here is a decorative enhancement and correctly respects
+ * prefers-reduced-motion.
+ *
+ * Size the block itself via inline style or a utility class; --circle
+ * is provided for avatar-shaped placeholders.
+ */
+
+.fluent-skeleton {
+  display: block;
+  border-radius: var(--radius-small);
+  background: linear-gradient(
+    90deg,
+    var(--color-neutral-bg-3) 25%,
+    var(--color-neutral-stroke-2) 37%,
+    var(--color-neutral-bg-3) 63%
+  );
+  background-size: 400% 100%;
+  animation: fluent-shimmer 1.4s ease infinite;
+}
+
+.fluent-skeleton--circle {
+  border-radius: var(--radius-circular);
+}
+
+@keyframes fluent-shimmer {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fluent-skeleton {
+    animation: none;
+    background-position: 50% 50%;
+  }
+}

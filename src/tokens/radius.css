@@ -1,0 +1,9 @@
+/* Corner radius scale — values fixed in CLAUDE.md's design defaults. */
+
+:root {
+  --radius-none: 0;
+  --radius-small: 4px; /* controls */
+  --radius-medium: 8px; /* cards, dialogs */
+  --radius-large: 12px; /* large surfaces */
+  --radius-circular: 9999px; /* pills, avatars */
+}

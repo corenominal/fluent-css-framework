@@ -1,0 +1,102 @@
+/*
+ * .fluent-btn base + --primary/--secondary/--subtle variants.
+ *
+ * The ::after glow on hover is a static (non-cursor-tracking)
+ * approximation of Fluent's Reveal highlight — true cursor-tracking
+ * reveal needs JS to read mouse position, which is out of scope for
+ * CSS-only core styling per CLAUDE.md.
+ */
+
+.fluent-btn {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-s-nudge) var(--spacing-m);
+  border: 1px solid transparent;
+  border-radius: var(--radius-small);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body1);
+  line-height: var(--line-height-body1);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  user-select: none;
+  transition: background-color var(--duration-fast) var(--easing-standard),
+    border-color var(--duration-fast) var(--easing-standard),
+    box-shadow var(--duration-fast) var(--easing-standard);
+}
+
+.fluent-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    120px circle at 50% 0%,
+    rgba(255, 255, 255, 0.35),
+    transparent 70%
+  );
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-fast) var(--easing-standard);
+}
+
+.fluent-btn:hover::after {
+  opacity: 1;
+}
+
+.fluent-btn:disabled,
+.fluent-btn.fluent-btn--disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* primary: filled accent */
+.fluent-btn--primary {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.fluent-btn--primary:hover {
+  background-color: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.fluent-btn--primary:active {
+  background-color: var(--accent-pressed);
+  border-color: var(--accent-pressed);
+}
+
+/* secondary: neutral outline */
+.fluent-btn--secondary {
+  background-color: var(--color-neutral-bg-1);
+  border-color: var(--color-neutral-stroke-1);
+  color: var(--color-neutral-foreground-1);
+}
+
+.fluent-btn--secondary:hover {
+  background-color: var(--color-neutral-bg-3);
+}
+
+.fluent-btn--secondary:active {
+  background-color: var(--color-neutral-stroke-2);
+}
+
+/* subtle: transparent until interacted with */
+.fluent-btn--subtle {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--color-neutral-foreground-1);
+}
+
+.fluent-btn--subtle:hover {
+  background-color: var(--color-neutral-bg-3);
+}
+
+.fluent-btn--subtle:active {
+  background-color: var(--color-neutral-stroke-2);
+}

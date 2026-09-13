@@ -1,0 +1,53 @@
+/*
+ * .fluent-breadcrumb — for Safari VoiceOver, add role="list" to the
+ * <ol> in your markup (see src/base/reset.css for why); this component's
+ * own selector doesn't require it since it's a deliberate, scoped style
+ * rather than a blanket list reset.
+ *
+ * Markup:
+ * <nav class="fluent-breadcrumb" aria-label="Breadcrumb">
+ *   <ol>
+ *     <li><a href="#">Home</a></li>
+ *     <li aria-current="page">Document</li>
+ *   </ol>
+ * </nav>
+ */
+
+.fluent-breadcrumb ol {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: var(--spacing-xs);
+}
+
+.fluent-breadcrumb li {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body1);
+  color: var(--color-neutral-foreground-2);
+}
+
+.fluent-breadcrumb li:not(:last-child)::after {
+  content: "\203A";
+  color: var(--color-neutral-foreground-3);
+}
+
+.fluent-breadcrumb a {
+  color: var(--color-neutral-foreground-2);
+  text-decoration: none;
+}
+
+.fluent-breadcrumb a:hover {
+  color: var(--color-link);
+  text-decoration: underline;
+}
+
+.fluent-breadcrumb li[aria-current="page"] {
+  color: var(--color-neutral-foreground-1);
+  font-weight: var(--font-weight-semibold);
+}

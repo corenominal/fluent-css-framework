@@ -1,0 +1,12 @@
+/*
+ * Light pillar: a two-tone keyboard focus ring (background-colored gap,
+ * then accent) that stays legible on any surface color/theme, matching
+ * Fluent's focus treatment. Exact ring widths are approximate — verify
+ * against current Fluent 2 focus-indicator guidance if needed.
+ */
+
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-neutral-bg-1), 0 0 0 4px var(--accent);
+  transition: box-shadow var(--duration-fast) var(--easing-standard);
+}

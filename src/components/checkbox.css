@@ -1,0 +1,82 @@
+/*
+ * .fluent-checkbox wraps a visually-hidden (opacity: 0, not display: none,
+ * so it stays focusable) native checkbox plus a custom box, so it's
+ * fully keyboard/screen-reader accessible while matching Fluent's shape.
+ *
+ * Markup:
+ * <label class="fluent-checkbox">
+ *   <input type="checkbox" class="fluent-checkbox__input" />
+ *   <span class="fluent-checkbox__box"></span>
+ *   <span class="fluent-checkbox__label">Label text</span>
+ * </label>
+ */
+
+.fluent-checkbox {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-s);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body1);
+  color: var(--color-neutral-foreground-1);
+  cursor: pointer;
+  user-select: none;
+}
+
+.fluent-checkbox:has(.fluent-checkbox__input:disabled) {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.fluent-checkbox__input {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  inset-inline-start: 0;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.fluent-checkbox__box {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--color-neutral-stroke-1);
+  border-radius: var(--radius-small);
+  background-color: var(--color-neutral-bg-1);
+  transition: background-color var(--duration-fast) var(--easing-standard),
+    border-color var(--duration-fast) var(--easing-standard);
+}
+
+.fluent-checkbox__box::after {
+  content: "";
+  width: 10px;
+  height: 7px;
+  border-left: 2px solid var(--accent-foreground);
+  border-bottom: 2px solid var(--accent-foreground);
+  transform: rotate(-45deg) scale(0);
+  transition: transform var(--duration-fast) var(--easing-standard);
+}
+
+.fluent-checkbox__input:checked ~ .fluent-checkbox__box {
+  background-color: var(--accent);
+  border-color: var(--accent);
+}
+
+.fluent-checkbox__input:checked ~ .fluent-checkbox__box::after {
+  transform: rotate(-45deg) scale(1);
+}
+
+.fluent-checkbox__input:focus-visible ~ .fluent-checkbox__box {
+  box-shadow: 0 0 0 2px var(--color-neutral-bg-1), 0 0 0 4px var(--accent);
+}
+
+.fluent-checkbox__input:disabled ~ .fluent-checkbox__box {
+  cursor: not-allowed;
+}

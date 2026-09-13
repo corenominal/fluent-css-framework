@@ -1,0 +1,79 @@
+/*
+ * .fluent-radio — same hidden-input + custom-visual pattern as
+ * .fluent-checkbox (see that file for the accessibility rationale).
+ *
+ * Markup:
+ * <label class="fluent-radio">
+ *   <input type="radio" name="..." class="fluent-radio__input" />
+ *   <span class="fluent-radio__circle"></span>
+ *   <span class="fluent-radio__label">Label text</span>
+ * </label>
+ */
+
+.fluent-radio {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-s);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body1);
+  color: var(--color-neutral-foreground-1);
+  cursor: pointer;
+  user-select: none;
+}
+
+.fluent-radio:has(.fluent-radio__input:disabled) {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.fluent-radio__input {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  inset-inline-start: 0;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.fluent-radio__circle {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--color-neutral-stroke-1);
+  border-radius: var(--radius-circular);
+  background-color: var(--color-neutral-bg-1);
+  transition: border-color var(--duration-fast) var(--easing-standard);
+}
+
+.fluent-radio__circle::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-circular);
+  background-color: var(--accent);
+  transform: scale(0);
+  transition: transform var(--duration-fast) var(--easing-standard);
+}
+
+.fluent-radio__input:checked ~ .fluent-radio__circle {
+  border-color: var(--accent);
+}
+
+.fluent-radio__input:checked ~ .fluent-radio__circle::after {
+  transform: scale(1);
+}
+
+.fluent-radio__input:focus-visible ~ .fluent-radio__circle {
+  box-shadow: 0 0 0 2px var(--color-neutral-bg-1), 0 0 0 4px var(--accent);
+}
+
+.fluent-radio__input:disabled ~ .fluent-radio__circle {
+  cursor: not-allowed;
+}
