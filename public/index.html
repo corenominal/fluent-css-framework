@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Fluent CSS Framework</title>
+    <link rel="icon" type="image/png" href="assets/img/icon.png" />
     <link rel="stylesheet" href="../dist/fluent.css" />
     <style>
       /* Demo-page-only styles; not part of the framework itself. */
@@ -27,6 +28,22 @@
         align-self: flex-start;
         height: 100vh;
         overflow-y: auto;
+      }
+      .docs-brand {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-s, 8px);
+        margin-bottom: var(--spacing-l, 16px);
+        padding-bottom: var(--spacing-l, 16px);
+        border-bottom: 1px solid var(--color-neutral-stroke-2, #e0e0e0);
+      }
+      .docs-brand img {
+        width: 28px;
+        height: 28px;
+      }
+      .docs-brand span {
+        font-size: var(--font-size-subtitle1, 20px);
+        font-weight: var(--font-weight-semibold, 600);
       }
       .docs-sidebar h3 {
         margin: var(--spacing-l, 16px) 0 var(--spacing-xs, 4px);
@@ -210,6 +227,11 @@
   </head>
   <body>
     <nav class="docs-sidebar" aria-label="Component index">
+      <div class="docs-brand">
+        <img src="assets/img/icon.png" alt="" width="28" height="28" />
+        <span>Fluent</span>
+      </div>
+
       <h3>Getting started</h3>
       <ul>
         <li><a href="#getting-started">Getting started</a></li>
