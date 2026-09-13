@@ -1,0 +1,147 @@
+/*
+ * Caret indicators marking a .fluent-menu trigger as a dropdown button,
+ * plus the extra rules needed so .fluent-btn-group can host a split
+ * button (an action .fluent-btn joined to a caret-only .fluent-menu
+ * toggle). Reuses .fluent-select-wrapper's mask-image chevron technique
+ * (select.css) rather than a new icon approach.
+ *
+ * .fluent-btn-dropdown — labeled trigger, e.g.:
+ * <summary class="fluent-menu__trigger fluent-btn fluent-btn--secondary fluent-btn-dropdown">
+ *   Actions
+ * </summary>
+ *
+ * .fluent-btn-dropdown-toggle — caret-only split-button toggle, e.g.:
+ * <summary class="fluent-menu__trigger fluent-btn fluent-btn--primary fluent-btn-dropdown-toggle" aria-label="More options"></summary>
+ * (keep the <summary> content empty with no internal whitespace — a
+ * stray text node becomes a second flex item and picks up .fluent-btn's
+ * gap, subtly widening the toggle.)
+ *
+ * Split button markup:
+ * <div class="fluent-btn-group" role="group" aria-label="Save">
+ *   <button class="fluent-btn fluent-btn--primary">Save</button>
+ *   <details class="fluent-menu">
+ *     <summary class="fluent-menu__trigger fluent-btn fluent-btn--primary fluent-btn-dropdown-toggle" aria-label="More options"></summary>
+ *     <div class="fluent-menu__list">...</div>
+ *   </details>
+ * </div>
+ *
+ * Must be imported after button.css, menu.css, and button-group.css:
+ * .fluent-btn-dropdown's padding-inline-end override is equal
+ * specificity to .fluent-btn's own padding shorthand once expanded to
+ * physical longhands, so with no specificity advantage the later import
+ * wins the cascade.
+ */
+
+.fluent-btn-dropdown {
+  padding-inline-end: var(--spacing-xxl);
+}
+
+.fluent-btn-dropdown::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  inset-inline-end: var(--spacing-m);
+  width: 10px;
+  height: 6px;
+  transform: translateY(-50%);
+  background-color: currentColor;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  pointer-events: none;
+  transition: transform var(--duration-fast) var(--easing-standard);
+}
+
+details[open] > .fluent-btn-dropdown::before {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+/* width/height apply with no explicit `display` because .fluent-btn's
+ * inline-flex context blockifies this ::before as an anonymous flex
+ * item — that's what makes an explicit size take effect on generated
+ * content. Don't reuse this class outside a .fluent-btn context.
+ */
+.fluent-btn-dropdown-toggle::before {
+  content: "";
+  width: 10px;
+  height: 6px;
+  background-color: currentColor;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  transition: transform var(--duration-fast) var(--easing-standard);
+}
+
+details[open] > .fluent-btn-dropdown-toggle::before {
+  transform: rotate(180deg);
+}
+
+/*
+ * .fluent-btn-group > .fluent-btn (button-group.css) only matches direct
+ * .fluent-btn children. In a split button the group's direct child is
+ * <details class="fluent-menu"> — .fluent-menu__trigger is a grandchild
+ * — so these mirror the same corner-radius/margin treatment for that
+ * shape without touching button-group.css itself.
+ *
+ * .fluent-menu is normally `display: inline-block`: as a flex item of
+ * .fluent-btn-group it stretches to the row's full height, but a plain
+ * block child doesn't inherit that stretch — .fluent-menu__trigger (the
+ * visible button) would stay at its own short content height when it has
+ * no text (just the caret), floating inside the taller invisible
+ * .fluent-menu box instead of filling it. Making .fluent-menu itself a
+ * flex container fixes this: its one visible child (the trigger) then
+ * stretches via the default align-items: stretch, matching the sibling
+ * action button's height exactly.
+ */
+.fluent-btn-group > .fluent-menu {
+  display: flex;
+}
+
+.fluent-btn-group > .fluent-menu > .fluent-menu__trigger {
+  border-radius: 0;
+}
+
+.fluent-btn-group > .fluent-menu:first-child > .fluent-menu__trigger {
+  border-start-start-radius: var(--radius-small);
+  border-end-start-radius: var(--radius-small);
+}
+
+.fluent-btn-group > .fluent-menu:last-child > .fluent-menu__trigger {
+  border-start-end-radius: var(--radius-small);
+  border-end-end-radius: var(--radius-small);
+}
+
+.fluent-btn-group > .fluent-menu:not(:first-child) {
+  margin-inline-start: -1px;
+}
+
+.fluent-btn-group > .fluent-menu > .fluent-menu__trigger:hover,
+.fluent-btn-group > .fluent-menu > .fluent-menu__trigger:focus-visible,
+.fluent-btn-group > .fluent-menu > .fluent-menu__trigger:active {
+  z-index: 1;
+}
+
+/*
+ * .fluent-btn-group has isolation: isolate (Stage 12, to contain its own
+ * hover/focus z-index bump so it can't outrank unrelated page overlays).
+ * isolation: isolate forces a new stacking context regardless of
+ * position, which also caps a nested .fluent-menu__list's z-index: 100
+ * escape hatch — without this rule, an open split-button dropdown could
+ * render behind later normal-flow page content, since the group itself
+ * has no elevated z-index among its own page siblings. Bump the group to
+ * the menu's z-index scale, but only while a dropdown inside it is
+ * actually open, restoring parity with a standalone (non-grouped)
+ * .fluent-menu, which has no isolation ancestor and already escapes
+ * correctly today.
+ *
+ * Known, accepted trade-off: because isolation makes the whole group one
+ * atomic stacking unit, this must elevate the entire group — including
+ * its unrelated plain action button — not just the open menu, since only
+ * the stacking-context root can escape. Not fixable without dropping
+ * isolation (which would reopen the original hover-bump-vs-page-overlay
+ * problem), so it's accepted rather than solved.
+ */
+.fluent-btn-group:has(> .fluent-menu[open]) {
+  position: relative;
+  z-index: 100;
+}

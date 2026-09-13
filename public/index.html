@@ -234,6 +234,7 @@
       <ul>
         <li><a href="#buttons">Buttons</a></li>
         <li><a href="#button-groups">Button groups</a></li>
+        <li><a href="#button-dropdowns">Button dropdowns</a></li>
         <li><a href="#form-controls">Inputs, checkbox, radio, switch, select</a></li>
       </ul>
 
@@ -488,6 +489,76 @@
 &lt;/div&gt;
 
 &lt;!-- mix fluent-btn--primary + aria-pressed for a segmented toggle group --&gt;</code></pre>
+      </section>
+
+      <section id="button-dropdowns">
+        <h2>Button dropdowns</h2>
+        <p>
+          Built on <a href="#menu"><code>.fluent-menu</code></a> — the same
+          zero-JS <code>&lt;details&gt;</code> disclosure, just with a caret
+          added via <code>.fluent-btn-dropdown</code> to mark the trigger as
+          a dropdown button.
+        </p>
+        <div class="button-row">
+          <details class="fluent-menu">
+            <summary class="fluent-menu__trigger fluent-btn fluent-btn--primary fluent-btn-dropdown">Actions</summary>
+            <div class="fluent-menu__list">
+              <a class="fluent-menu__item" href="#">Edit</a>
+              <a class="fluent-menu__item" href="#">Duplicate</a>
+              <hr class="fluent-menu__divider" />
+              <a class="fluent-menu__item fluent-menu__item--danger" href="#">Delete</a>
+            </div>
+          </details>
+          <details class="fluent-menu">
+            <summary class="fluent-menu__trigger fluent-btn fluent-btn--secondary fluent-btn-dropdown">Actions</summary>
+            <div class="fluent-menu__list">
+              <a class="fluent-menu__item" href="#">Edit</a>
+              <a class="fluent-menu__item" href="#">Duplicate</a>
+              <hr class="fluent-menu__divider" />
+              <a class="fluent-menu__item fluent-menu__item--danger" href="#">Delete</a>
+            </div>
+          </details>
+        </div>
+        <pre class="doc-snippet"><code>&lt;details class="fluent-menu"&gt;
+  &lt;summary class="fluent-menu__trigger fluent-btn fluent-btn--primary fluent-btn-dropdown"&gt;
+    Actions
+  &lt;/summary&gt;
+  &lt;div class="fluent-menu__list"&gt;
+    &lt;a class="fluent-menu__item" href="#"&gt;Edit&lt;/a&gt;
+    &lt;a class="fluent-menu__item" href="#"&gt;Duplicate&lt;/a&gt;
+    &lt;hr class="fluent-menu__divider" /&gt;
+    &lt;a class="fluent-menu__item fluent-menu__item--danger" href="#"&gt;Delete&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/details&gt;</code></pre>
+
+        <h3>Split button</h3>
+        <p>
+          An action button joined to a separate caret-only toggle, via
+          <code>.fluent-btn-group</code> +
+          <code>.fluent-btn-dropdown-toggle</code>.
+        </p>
+        <div class="button-row">
+          <div class="fluent-btn-group" role="group" aria-label="Save">
+            <button type="button" class="fluent-btn fluent-btn--primary">Save</button>
+            <details class="fluent-menu">
+              <summary class="fluent-menu__trigger fluent-btn fluent-btn--primary fluent-btn-dropdown-toggle" aria-label="More save options"></summary>
+              <div class="fluent-menu__list">
+                <a class="fluent-menu__item" href="#">Save as draft</a>
+                <a class="fluent-menu__item" href="#">Save and close</a>
+              </div>
+            </details>
+          </div>
+        </div>
+        <pre class="doc-snippet"><code>&lt;div class="fluent-btn-group" role="group" aria-label="Save"&gt;
+  &lt;button class="fluent-btn fluent-btn--primary"&gt;Save&lt;/button&gt;
+  &lt;details class="fluent-menu"&gt;
+    &lt;summary class="fluent-menu__trigger fluent-btn fluent-btn--primary fluent-btn-dropdown-toggle" aria-label="More save options"&gt;&lt;/summary&gt;
+    &lt;div class="fluent-menu__list"&gt;
+      &lt;a class="fluent-menu__item" href="#"&gt;Save as draft&lt;/a&gt;
+      &lt;a class="fluent-menu__item" href="#"&gt;Save and close&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/details&gt;
+&lt;/div&gt;</code></pre>
       </section>
 
       <section id="form-controls">
