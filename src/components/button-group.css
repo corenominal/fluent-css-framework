@@ -1,0 +1,53 @@
+/*
+ * .fluent-btn-group — joins a row of .fluent-btn elements into one
+ * segmented control (Bootstrap's .btn-group pattern): flush borders (no
+ * gap; adjacent 1px borders collapsed into one via negative margin) and
+ * only the outermost corners rounded.
+ *
+ * Requires direct .fluent-btn children only (no wrapping <span>/icon
+ * before the first button) — the :first-child/:last-child radius rules
+ * key off literal DOM position.
+ *
+ * Logical corner properties (border-start-start-radius etc.), not
+ * border-top-left-radius, so the rounded corners land on the correct
+ * physical side under dir="rtl" — matching every other RTL-aware
+ * component in this codebase (see PLAN.md Stage 8). This is the first
+ * use of the logical *corner-radius* longhands specifically in this
+ * codebase — panel.css documents a real Chrome bug where this exact
+ * property family fails to resolve under RTL, though only on <dialog>
+ * elements (confirmed fine on plain elements there); verified visually
+ * under dir="rtl" here too rather than assuming safety by analogy.
+ *
+ * isolation: isolate contains the hover/focus z-index bump below to this
+ * group's own stacking context, so it can never outrank unrelated
+ * later-page overlays (tooltips/menus use z-index: 100+).
+ */
+
+.fluent-btn-group {
+  display: inline-flex;
+  isolation: isolate;
+}
+
+.fluent-btn-group > .fluent-btn {
+  border-radius: 0;
+}
+
+.fluent-btn-group > .fluent-btn:first-child {
+  border-start-start-radius: var(--radius-small);
+  border-end-start-radius: var(--radius-small);
+}
+
+.fluent-btn-group > .fluent-btn:last-child {
+  border-start-end-radius: var(--radius-small);
+  border-end-end-radius: var(--radius-small);
+}
+
+.fluent-btn-group > .fluent-btn:not(:first-child) {
+  margin-inline-start: -1px;
+}
+
+.fluent-btn-group > .fluent-btn:hover,
+.fluent-btn-group > .fluent-btn:focus-visible,
+.fluent-btn-group > .fluent-btn:active {
+  z-index: 1;
+}

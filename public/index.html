@@ -233,6 +233,7 @@
       <h3>Form controls</h3>
       <ul>
         <li><a href="#buttons">Buttons</a></li>
+        <li><a href="#button-groups">Button groups</a></li>
         <li><a href="#form-controls">Inputs, checkbox, radio, switch, select</a></li>
       </ul>
 
@@ -459,6 +460,34 @@
         <pre class="doc-snippet"><code>&lt;button class="fluent-btn fluent-btn--primary"&gt;Primary&lt;/button&gt;
 &lt;button class="fluent-btn fluent-btn--secondary"&gt;Secondary&lt;/button&gt;
 &lt;button class="fluent-btn fluent-btn--subtle"&gt;Subtle&lt;/button&gt;</code></pre>
+      </section>
+
+      <section id="button-groups">
+        <h2>Button groups</h2>
+        <p>
+          <code>.fluent-btn-group</code> joins a row of buttons into one
+          segmented control — flush borders, only the outer corners
+          rounded. No extra class is needed on the buttons themselves.
+        </p>
+        <div class="button-row">
+          <div class="fluent-btn-group" role="group" aria-label="Alignment">
+            <button type="button" class="fluent-btn fluent-btn--secondary">Left</button>
+            <button type="button" class="fluent-btn fluent-btn--secondary">Middle</button>
+            <button type="button" class="fluent-btn fluent-btn--secondary">Right</button>
+          </div>
+          <div class="fluent-btn-group" role="group" aria-label="Date range">
+            <button type="button" class="fluent-btn fluent-btn--primary" aria-pressed="true">Day</button>
+            <button type="button" class="fluent-btn fluent-btn--secondary" aria-pressed="false">Week</button>
+            <button type="button" class="fluent-btn fluent-btn--secondary" aria-pressed="false">Month</button>
+          </div>
+        </div>
+        <pre class="doc-snippet"><code>&lt;div class="fluent-btn-group" role="group" aria-label="Alignment"&gt;
+  &lt;button class="fluent-btn fluent-btn--secondary"&gt;Left&lt;/button&gt;
+  &lt;button class="fluent-btn fluent-btn--secondary"&gt;Middle&lt;/button&gt;
+  &lt;button class="fluent-btn fluent-btn--secondary"&gt;Right&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;!-- mix fluent-btn--primary + aria-pressed for a segmented toggle group --&gt;</code></pre>
       </section>
 
       <section id="form-controls">
