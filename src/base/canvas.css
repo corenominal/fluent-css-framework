@@ -1,0 +1,11 @@
+/*
+ * Default page-level background (Light pillar). Every project that drops
+ * this framework in gets the soft gradient wash automatically via
+ * --surface-canvas (src/tokens/colors.css) — consumers who don't want it
+ * can override background on body themselves.
+ */
+
+body {
+  background: var(--surface-canvas);
+  min-height: 100vh;
+}

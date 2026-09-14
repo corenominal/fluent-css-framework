@@ -21,8 +21,9 @@
   gap: var(--spacing-s);
   padding: var(--spacing-m) var(--spacing-l);
   border: 1px solid var(--alert-color);
-  border-radius: var(--radius-medium);
+  border-radius: var(--radius-large);
   background-color: color-mix(in srgb, var(--alert-color) 12%, var(--color-neutral-bg-1));
+  box-shadow: var(--shadow-2);
   font-family: var(--font-family-base);
   font-size: var(--font-size-body1);
 }

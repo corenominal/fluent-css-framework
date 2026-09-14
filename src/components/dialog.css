@@ -12,7 +12,7 @@
 
 dialog.fluent-dialog {
   border: none;
-  border-radius: var(--radius-medium);
+  border-radius: var(--radius-large);
   padding: var(--spacing-xxl);
   width: 90vw;
   max-width: 480px;

@@ -11,11 +11,18 @@
 :root {
   /* accent + derived interaction states (same formula in both themes) —
      these are tuned for use as a FILL paired with white --accent-foreground
-     text (buttons, filled controls), not as text color directly: on its
-     own, --accent measures only 3.64:1 against the dark-theme page
-     background, well under the 4.5:1 WCAG AA text threshold. Use
-     --color-link below for accent-colored text instead. */
-  --accent: #0078d4;
+     text (buttons, filled controls), not as text color directly. Use
+     --color-link below for accent-colored text instead.
+
+     #2472E0 is a deliberate brand deviation, not a Fluent 2 token: the
+     real Fluent 2 default web brand blue is #0F6CBD (itself already
+     brighter than this framework's old #0078d4 "Fluent 1" accent), but
+     this value goes brighter/more saturated still, to match a specific
+     reference aesthetic the framework was asked to chase. White
+     --accent-foreground text on this fill measures ~4.6:1 (WCAG AA
+     4.5:1) — re-verify with devtools, not just this comment, if the
+     value ever changes again. */
+  --accent: #2472e0;
   --accent-hover: color-mix(in srgb, var(--accent) 88%, white);
   --accent-pressed: color-mix(in srgb, var(--accent) 78%, black);
   --accent-foreground: #ffffff;
@@ -57,6 +64,26 @@
      from the theme-swapping neutral tokens above. */
   --color-tooltip-bg: #252423;
   --color-tooltip-foreground: #ffffff;
+
+  /* Default page-level background (Light pillar): a soft, always-on wash
+     behind every surface, distinct from the opt-in .fluent-gradient
+     section utility in src/utilities/gradients.css. Not an exact Fluent 2
+     token — approximates the soft blue-to-white wash in the reference
+     material this framework was asked to match. No dark-theme override
+     block needed: color-mix() re-resolves against whichever
+     --color-neutral-bg-1 is currently active, so it re-tints itself
+     automatically on theme flip (same pattern .fluent-gradient uses). */
+  --surface-canvas-tint: color-mix(in srgb, var(--accent) 8%, var(--color-neutral-bg-1));
+  --surface-canvas: linear-gradient(
+    160deg,
+    var(--surface-canvas-tint) 0%,
+    var(--color-neutral-bg-1) 55%
+  );
+
+  /* Tinted circular backdrop for .fluent-icon-badge (and any other
+     small accent-tinted fill) — same 15% mix ratio .fluent-badge's
+     neutral variant already uses, for visual consistency. */
+  --color-accent-subtle-bg: color-mix(in srgb, var(--accent) 15%, var(--color-neutral-bg-1));
 }
 
 /* Dark theme via OS preference, unless explicitly overridden (see below). */

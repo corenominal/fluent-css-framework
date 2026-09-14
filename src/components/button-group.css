@@ -33,13 +33,13 @@
 }
 
 .fluent-btn-group > .fluent-btn:first-child {
-  border-start-start-radius: var(--radius-small);
-  border-end-start-radius: var(--radius-small);
+  border-start-start-radius: var(--radius-medium);
+  border-end-start-radius: var(--radius-medium);
 }
 
 .fluent-btn-group > .fluent-btn:last-child {
-  border-start-end-radius: var(--radius-small);
-  border-end-end-radius: var(--radius-small);
+  border-start-end-radius: var(--radius-medium);
+  border-end-end-radius: var(--radius-medium);
 }
 
 .fluent-btn-group > .fluent-btn:not(:first-child) {

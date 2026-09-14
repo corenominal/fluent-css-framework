@@ -51,3 +51,9 @@
 .fluent-textarea[aria-invalid="true"]:focus-visible {
   box-shadow: 0 0 0 2px var(--color-neutral-bg-1), 0 0 0 4px var(--color-danger);
 }
+
+/* Fully-round variant for search bars and similar chrome. */
+.fluent-input--pill {
+  border-radius: var(--radius-circular);
+  padding-inline: var(--spacing-l);
+}

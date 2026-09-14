@@ -17,7 +17,9 @@
         min-height: 100vh;
         font-family: var(--font-family-base, sans-serif);
         color: var(--color-neutral-foreground-1, #242424);
-        background: var(--color-neutral-bg-1, #fff);
+        /* background intentionally left unset here so the framework's own
+           default body rule (src/base/canvas.css, --surface-canvas) shows
+           through instead of being overridden by this demo page. */
       }
       .docs-sidebar {
         flex: 0 0 220px;
@@ -68,7 +70,7 @@
         font-size: var(--font-size-body1, 14px);
       }
       .docs-sidebar a:hover {
-        color: var(--accent, #0078d4);
+        color: var(--accent, #2472e0);
       }
       .docs-content {
         flex: 1;
@@ -140,7 +142,7 @@
       }
       .spacing-bar {
         height: 12px;
-        background: var(--accent, #0078d4);
+        background: var(--accent, #2472e0);
         border-radius: var(--radius-small, 4px);
       }
       .elevation-row,
@@ -162,7 +164,7 @@
       .motion-demo {
         width: 48px;
         height: 48px;
-        background: var(--accent, #0078d4);
+        background: var(--accent, #2472e0);
         border-radius: var(--radius-medium, 8px);
         transition: transform var(--duration-normal, 200ms)
           var(--easing-decelerate, ease);
@@ -216,6 +218,26 @@
       }
       .list-demo {
         max-width: 320px;
+      }
+      .icon-badge-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-xl, 20px);
+      }
+      .icon-badge-item {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-m, 12px);
+        max-width: 220px;
+      }
+      .icon-badge-item h3 {
+        margin: 0;
+        font-size: var(--font-size-body2, 16px);
+      }
+      .icon-badge-item p {
+        margin: 0;
+        font-size: var(--font-size-caption1, 12px);
+        color: var(--color-neutral-foreground-2, #616161);
       }
       .theme-controls {
         display: flex;
@@ -281,6 +303,7 @@
         <li><a href="#alerts">Alerts</a></li>
         <li><a href="#progress-spinner">Progress &amp; spinner</a></li>
         <li><a href="#badges">Badges</a></li>
+        <li><a href="#icon-badge">Icon badge</a></li>
         <li><a href="#skeleton">Skeleton</a></li>
       </ul>
 
@@ -483,6 +506,14 @@
         <pre class="doc-snippet"><code>&lt;button class="fluent-btn fluent-btn--primary"&gt;Primary&lt;/button&gt;
 &lt;button class="fluent-btn fluent-btn--secondary"&gt;Secondary&lt;/button&gt;
 &lt;button class="fluent-btn fluent-btn--subtle"&gt;Subtle&lt;/button&gt;</code></pre>
+
+        <p class="fluent-hint">Circular icon button — <code>.fluent-btn--icon.fluent-btn--circular</code></p>
+        <div class="button-row">
+          <button type="button" class="fluent-btn fluent-btn--primary fluent-btn--icon fluent-btn--circular" aria-label="New item">+</button>
+          <button type="button" class="fluent-btn fluent-btn--secondary fluent-btn--icon fluent-btn--circular" aria-label="More options">&hellip;</button>
+        </div>
+        <pre class="doc-snippet"><code>&lt;button class="fluent-btn fluent-btn--primary fluent-btn--icon fluent-btn--circular"
+        aria-label="New item"&gt;+&lt;/button&gt;</code></pre>
       </section>
 
       <section id="button-groups">
@@ -585,6 +616,16 @@
 
       <section id="form-controls">
         <h2>Form controls</h2>
+
+        <p class="fluent-hint">Pill variant — <code>.fluent-input--pill</code></p>
+        <input
+          class="fluent-input fluent-input--pill form-demo"
+          type="search"
+          placeholder="Search todos…"
+          aria-label="Search"
+        />
+        <pre class="doc-snippet"><code>&lt;input class="fluent-input fluent-input--pill" type="search" placeholder="Search…" /&gt;</code></pre>
+
         <form class="form-demo" novalidate>
           <div class="fluent-field">
             <label class="fluent-label" for="demo-name">Name</label>
@@ -694,27 +735,111 @@
         <h2>Card</h2>
         <div class="card-row">
           <div class="fluent-card">
-            <h3 class="fluent-card__header">Static card</h3>
-            <p>Cards are a resting elevated surface for grouping content.</p>
+            <div class="fluent-card__body">
+              <h3 class="fluent-card__header">Static card</h3>
+              <p>Cards are a resting elevated surface for grouping content.</p>
+            </div>
           </div>
           <div class="fluent-card fluent-card--interactive">
-            <h3 class="fluent-card__header">Interactive card</h3>
-            <p>Hover this one — elevation increases on hover.</p>
-            <div class="fluent-card__footer">
-              <button type="button" class="fluent-btn fluent-btn--secondary">Dismiss</button>
-              <button type="button" class="fluent-btn fluent-btn--primary">Open</button>
+            <div class="fluent-card__body">
+              <h3 class="fluent-card__header">Interactive card</h3>
+              <p>Hover this one — elevation increases on hover.</p>
+              <div class="fluent-card__footer">
+                <button type="button" class="fluent-btn fluent-btn--secondary">Dismiss</button>
+                <button type="button" class="fluent-btn fluent-btn--primary">Open</button>
+              </div>
             </div>
           </div>
         </div>
         <pre class="doc-snippet"><code>&lt;div class="fluent-card"&gt;
-  &lt;h3 class="fluent-card__header"&gt;Title&lt;/h3&gt;
-  &lt;p&gt;Body content.&lt;/p&gt;
-  &lt;div class="fluent-card__footer"&gt;
-    &lt;button class="fluent-btn fluent-btn--primary"&gt;Open&lt;/button&gt;
+  &lt;div class="fluent-card__body"&gt;
+    &lt;h3 class="fluent-card__header"&gt;Title&lt;/h3&gt;
+    &lt;p&gt;Body content.&lt;/p&gt;
+    &lt;div class="fluent-card__footer"&gt;
+      &lt;button class="fluent-btn fluent-btn--primary"&gt;Open&lt;/button&gt;
+    &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;!-- add fluent-card--interactive for hover elevation --&gt;</code></pre>
+
+        <p class="fluent-hint">Left accent stripe — <code>.fluent-card--accent-start</code></p>
+        <div class="card-row">
+          <div class="fluent-card fluent-card--accent-start">
+            <div class="fluent-card__body">
+              <h3 class="fluent-card__header">Redline delivery log</h3>
+              <p>25 Aug 2026 — see email from Martin.</p>
+            </div>
+          </div>
+          <div class="fluent-card fluent-card--accent-start" style="--card-accent-color: var(--color-success)">
+            <div class="fluent-card__body">
+              <h3 class="fluent-card__header">Custom stripe color</h3>
+              <p>Override <code>--card-accent-color</code> per instance.</p>
+            </div>
+          </div>
+        </div>
+        <pre class="doc-snippet"><code>&lt;div class="fluent-card fluent-card--accent-start"&gt;
+  &lt;div class="fluent-card__body"&gt;…&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- override the stripe color per-instance: --&gt;
+&lt;div class="fluent-card fluent-card--accent-start"
+     style="--card-accent-color: var(--color-success)"&gt;…&lt;/div&gt;</code></pre>
+
+        <p class="fluent-hint">Top image header — <code>.fluent-card__image</code></p>
+        <div class="card-row">
+          <div class="fluent-card">
+            <img
+              class="fluent-card__image"
+              alt=""
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23a8c8e8'/%3E%3Cstop offset='100%25' stop-color='%23375a83'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='225' fill='url(%23g)'/%3E%3C/svg%3E"
+            />
+            <div class="fluent-card__body">
+              <h3 class="fluent-card__header">Mountain retreat</h3>
+              <p>An image flush against the card's edges, clipped to match its own corner radius.</p>
+            </div>
+          </div>
+        </div>
+        <pre class="doc-snippet"><code>&lt;div class="fluent-card"&gt;
+  &lt;img class="fluent-card__image" src="photo.jpg" alt="…" /&gt;
+  &lt;div class="fluent-card__body"&gt;
+    &lt;h3 class="fluent-card__header"&gt;Title&lt;/h3&gt;
+    &lt;p&gt;Body content.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- override --fluent-card-image-aspect-ratio on .fluent-card__image for
+     a non-16/9 ratio, e.g. style="--fluent-card-image-aspect-ratio: 1 / 1" --&gt;</code></pre>
+
+        <p class="fluent-hint">Image overlay hero — <code>.fluent-card__image-overlay</code></p>
+        <div class="card-row">
+          <div class="fluent-card">
+            <div class="fluent-card__media">
+              <img
+                class="fluent-card__image"
+                alt=""
+                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='225'%3E%3Cdefs%3E%3ClinearGradient id='g2' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23f2d98c'/%3E%3Cstop offset='100%25' stop-color='%236b4f2a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='225' fill='url(%23g2)'/%3E%3C/svg%3E"
+              />
+              <div class="fluent-card__image-overlay">
+                <h3 class="fluent-card__header">Desert trek</h3>
+                <p>Overlay text sits on a gradient scrim for legibility over the photo.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <pre class="doc-snippet"><code>&lt;div class="fluent-card"&gt;
+  &lt;div class="fluent-card__media"&gt;
+    &lt;img class="fluent-card__image" src="photo.jpg" alt="…" /&gt;
+    &lt;div class="fluent-card__image-overlay"&gt;
+      &lt;h3 class="fluent-card__header"&gt;Title&lt;/h3&gt;
+      &lt;p&gt;Overlay text.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- .fluent-card__media is only needed for the overlay variant — an
+     &lt;img&gt; can't contain child elements, so the overlay is an
+     absolutely-positioned sibling scoped to just the image --&gt;</code></pre>
       </section>
 
       <section id="gradients">
@@ -725,18 +850,30 @@
           they stay legible regardless of which gradient variant sits
           behind them.
         </p>
+        <p>
+          This page's own <code>&lt;body&gt;</code> background is a separate,
+          always-on token — <code>--surface-canvas</code>
+          (<code>src/base/canvas.css</code>) — applied by default to every
+          project that drops in the framework. <code>.fluent-gradient</code>
+          below is opt-in, for individual sections that want a stronger or
+          differently-tinted wash on top of that default canvas.
+        </p>
         <div class="gradient-demo">
           <div>
             <p class="fluent-hint">Default — <code>.fluent-gradient</code></p>
             <div class="fluent-gradient">
               <div class="card-row">
                 <div class="fluent-card">
-                  <h3 class="fluent-card__header">Team update</h3>
-                  <p>Dummy card content to demo a gradient section background.</p>
+                  <div class="fluent-card__body">
+                    <h3 class="fluent-card__header">Team update</h3>
+                    <p>Dummy card content to demo a gradient section background.</p>
+                  </div>
                 </div>
                 <div class="fluent-card fluent-card--interactive">
-                  <h3 class="fluent-card__header">Interactive card</h3>
-                  <p>Hover this one — elevation increases on hover.</p>
+                  <div class="fluent-card__body">
+                    <h3 class="fluent-card__header">Interactive card</h3>
+                    <p>Hover this one — elevation increases on hover.</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -747,12 +884,16 @@
             <div class="fluent-gradient fluent-gradient--brand">
               <div class="card-row">
                 <div class="fluent-card">
-                  <h3 class="fluent-card__header">Team update</h3>
-                  <p>Dummy card content to demo a gradient section background.</p>
+                  <div class="fluent-card__body">
+                    <h3 class="fluent-card__header">Team update</h3>
+                    <p>Dummy card content to demo a gradient section background.</p>
+                  </div>
                 </div>
                 <div class="fluent-card fluent-card--interactive">
-                  <h3 class="fluent-card__header">Interactive card</h3>
-                  <p>Hover this one — elevation increases on hover.</p>
+                  <div class="fluent-card__body">
+                    <h3 class="fluent-card__header">Interactive card</h3>
+                    <p>Hover this one — elevation increases on hover.</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -763,12 +904,16 @@
             <div class="fluent-gradient fluent-gradient--success">
               <div class="card-row">
                 <div class="fluent-card">
-                  <h3 class="fluent-card__header">Team update</h3>
-                  <p>Dummy card content to demo a gradient section background.</p>
+                  <div class="fluent-card__body">
+                    <h3 class="fluent-card__header">Team update</h3>
+                    <p>Dummy card content to demo a gradient section background.</p>
+                  </div>
                 </div>
                 <div class="fluent-card fluent-card--interactive">
-                  <h3 class="fluent-card__header">Interactive card</h3>
-                  <p>Hover this one — elevation increases on hover.</p>
+                  <div class="fluent-card__body">
+                    <h3 class="fluent-card__header">Interactive card</h3>
+                    <p>Hover this one — elevation increases on hover.</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -779,12 +924,16 @@
             <div class="fluent-gradient fluent-gradient--warning">
               <div class="card-row">
                 <div class="fluent-card">
-                  <h3 class="fluent-card__header">Team update</h3>
-                  <p>Dummy card content to demo a gradient section background.</p>
+                  <div class="fluent-card__body">
+                    <h3 class="fluent-card__header">Team update</h3>
+                    <p>Dummy card content to demo a gradient section background.</p>
+                  </div>
                 </div>
                 <div class="fluent-card fluent-card--interactive">
-                  <h3 class="fluent-card__header">Interactive card</h3>
-                  <p>Hover this one — elevation increases on hover.</p>
+                  <div class="fluent-card__body">
+                    <h3 class="fluent-card__header">Interactive card</h3>
+                    <p>Hover this one — elevation increases on hover.</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -795,12 +944,16 @@
             <div class="fluent-gradient fluent-gradient--danger">
               <div class="card-row">
                 <div class="fluent-card">
-                  <h3 class="fluent-card__header">Team update</h3>
-                  <p>Dummy card content to demo a gradient section background.</p>
+                  <div class="fluent-card__body">
+                    <h3 class="fluent-card__header">Team update</h3>
+                    <p>Dummy card content to demo a gradient section background.</p>
+                  </div>
                 </div>
                 <div class="fluent-card fluent-card--interactive">
-                  <h3 class="fluent-card__header">Interactive card</h3>
-                  <p>Hover this one — elevation increases on hover.</p>
+                  <div class="fluent-card__body">
+                    <h3 class="fluent-card__header">Interactive card</h3>
+                    <p>Hover this one — elevation increases on hover.</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -808,8 +961,10 @@
         </div>
         <pre class="doc-snippet"><code>&lt;div class="fluent-gradient fluent-gradient--brand"&gt;
   &lt;div class="fluent-card"&gt;
-    &lt;h3 class="fluent-card__header"&gt;Title&lt;/h3&gt;
-    &lt;p&gt;Body content.&lt;/p&gt;
+    &lt;div class="fluent-card__body"&gt;
+      &lt;h3 class="fluent-card__header"&gt;Title&lt;/h3&gt;
+      &lt;p&gt;Body content.&lt;/p&gt;
+    &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
@@ -903,6 +1058,17 @@
         <pre class="doc-snippet"><code>&lt;div class="fluent-tabs" role="tablist"&gt;
   &lt;button class="fluent-tab" role="tab" aria-selected="true"&gt;Overview&lt;/button&gt;
   &lt;button class="fluent-tab" role="tab" aria-selected="false"&gt;Activity&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+
+        <p class="fluent-hint">Pill variant — <code>.fluent-tabs--pill</code></p>
+        <div class="fluent-tabs fluent-tabs--pill" role="tablist">
+          <button type="button" class="fluent-tab" role="tab" aria-selected="true">TODO</button>
+          <button type="button" class="fluent-tab" role="tab" aria-selected="false">Completed</button>
+          <button type="button" class="fluent-tab" role="tab" aria-selected="false">Deleted</button>
+        </div>
+        <pre class="doc-snippet"><code>&lt;div class="fluent-tabs fluent-tabs--pill" role="tablist"&gt;
+  &lt;button class="fluent-tab" role="tab" aria-selected="true"&gt;TODO&lt;/button&gt;
+  &lt;button class="fluent-tab" role="tab" aria-selected="false"&gt;Completed&lt;/button&gt;
 &lt;/div&gt;</code></pre>
       </section>
 
@@ -1015,6 +1181,41 @@
         <pre class="doc-snippet"><code>&lt;span class="fluent-badge fluent-badge--success"&gt;Active&lt;/span&gt;
 
 &lt;!-- variants: (none) / --brand / --success / --warning / --danger --&gt;</code></pre>
+      </section>
+
+      <section id="icon-badge">
+        <h2>Icon badge</h2>
+        <p>
+          A fixed-size, accent-tinted circle for a decorative feature icon
+          paired with a label — not for interactive controls.
+        </p>
+        <div class="icon-badge-row">
+          <div class="icon-badge-item">
+            <span class="fluent-icon-badge" aria-hidden="true">&#9881;</span>
+            <div>
+              <h3>Practical solutions</h3>
+              <p>Tools that solve real problems.</p>
+            </div>
+          </div>
+          <div class="icon-badge-item">
+            <span class="fluent-icon-badge fluent-icon-badge--success" aria-hidden="true">&#10003;</span>
+            <div>
+              <h3>People focused</h3>
+              <p>Built for the teams who use them.</p>
+            </div>
+          </div>
+          <div class="icon-badge-item">
+            <span class="fluent-icon-badge fluent-icon-badge--warning" aria-hidden="true">&#9650;</span>
+            <div>
+              <h3>Lasting impact</h3>
+              <p>Small improvements make a big difference.</p>
+            </div>
+          </div>
+        </div>
+        <pre class="doc-snippet"><code>&lt;span class="fluent-icon-badge" aria-hidden="true"&gt;&amp;#9881;&lt;/span&gt;
+
+&lt;!-- sizes: --small / (default) / --large
+     variants: (none = brand) / --success / --warning / --danger --&gt;</code></pre>
       </section>
 
       <section id="skeleton">

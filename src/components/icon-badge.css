@@ -1,0 +1,49 @@
+/*
+ * .fluent-icon-badge — a fixed-size circular, accent-tinted backdrop for a
+ * decorative feature icon (e.g. next to a "Practical solutions" label),
+ * not for interactive controls or status text. Same 15%-tint formula as
+ * .fluent-badge's neutral variant (badge.css), but here --icon-badge-color
+ * is used as the icon's `color` at full strength against that tint, not
+ * as body text — badge.css found several of these hues fail 4.5:1 text
+ * contrast at this tint ratio, so treat any icon inside as decorative
+ * (aria-hidden, paired with adjacent visible text) rather than the sole
+ * carrier of meaning.
+ *
+ * Markup:
+ * <span class="fluent-icon-badge" aria-hidden="true">⚙</span>
+ */
+
+.fluent-icon-badge {
+  --icon-badge-color: var(--accent);
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-circular);
+  background-color: color-mix(in srgb, var(--icon-badge-color) 15%, var(--color-neutral-bg-1));
+  color: var(--icon-badge-color);
+}
+
+.fluent-icon-badge--small {
+  width: 32px;
+  height: 32px;
+}
+
+.fluent-icon-badge--large {
+  width: 48px;
+  height: 48px;
+}
+
+.fluent-icon-badge--success {
+  --icon-badge-color: var(--color-success);
+}
+
+.fluent-icon-badge--warning {
+  --icon-badge-color: var(--color-warning);
+}
+
+.fluent-icon-badge--danger {
+  --icon-badge-color: var(--color-danger);
+}

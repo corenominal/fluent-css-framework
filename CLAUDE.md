@@ -17,10 +17,12 @@ Every component should be traceable back to one of Fluent's five pillars. When i
 - **Scale** — layouts and components adapt across pointer/touch/keyboard input and screen sizes; hit targets and spacing follow Fluent's sizing scale.
 
 Visual defaults to follow unless a component spec says otherwise:
-- Corner radius: small controls 4px, cards/dialogs 8px, large surfaces up to 12px.
+- Corner radius: form controls 4px, buttons/menus/tooltips 8px, cards/dialogs/panels/alerts/lists 12px, pills/avatars fully round.
+- Cards default to a visibly raised `--shadow-8` (not a barely-there `--shadow-2`) so Depth actually reads against the default gradient canvas below — bump to `--shadow-16` on hover/interactive.
+- The page background is a soft accent-tinted gradient wash by default (`--surface-canvas`, `src/base/canvas.css`), not a flat neutral fill — this is the framework's default `body` background, distinct from the opt-in `.fluent-gradient` section utility.
 - Font stack: `"Segoe UI Variable", "Segoe UI", system-ui, -apple-system, sans-serif` (fall back gracefully on non-Windows/non-Segoe systems).
 - Reveal highlight on hover for controls in a group (subtle radial-gradient border/background following the cursor) where practical in pure CSS.
-- Accent color is a single configurable custom property (`--accent`) that the rest of the palette derives from (tints/shades), so consumers can rebrand by overriding one value.
+- Accent color is a single configurable custom property (`--accent`) that the rest of the palette derives from (tints/shades), so consumers can rebrand by overriding one value. Current default (`#2472e0`) is a deliberate deviation from Fluent 2's real default web brand blue (`#0F6CBD`) — brighter/more saturated, chosen to match a specific reference aesthetic rather than the official ramp; flagged here so it isn't mistaken for a verified Fluent value.
 
 ## Architecture conventions
 

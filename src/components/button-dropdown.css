@@ -102,13 +102,13 @@ details[open] > .fluent-btn-dropdown-toggle::before {
 }
 
 .fluent-btn-group > .fluent-menu:first-child > .fluent-menu__trigger {
-  border-start-start-radius: var(--radius-small);
-  border-end-start-radius: var(--radius-small);
+  border-start-start-radius: var(--radius-medium);
+  border-end-start-radius: var(--radius-medium);
 }
 
 .fluent-btn-group > .fluent-menu:last-child > .fluent-menu__trigger {
-  border-start-end-radius: var(--radius-small);
-  border-end-end-radius: var(--radius-small);
+  border-start-end-radius: var(--radius-medium);
+  border-end-end-radius: var(--radius-medium);
 }
 
 .fluent-btn-group > .fluent-menu:not(:first-child) {

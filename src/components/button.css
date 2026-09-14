@@ -16,7 +16,7 @@
   gap: var(--spacing-xs);
   padding: var(--spacing-s-nudge) var(--spacing-m);
   border: 1px solid transparent;
-  border-radius: var(--radius-small);
+  border-radius: var(--radius-medium);
   font-family: var(--font-family-base);
   font-size: var(--font-size-body1);
   line-height: var(--line-height-body1);
@@ -59,11 +59,13 @@
   background-color: var(--accent);
   border-color: var(--accent);
   color: var(--accent-foreground);
+  box-shadow: var(--shadow-4);
 }
 
 .fluent-btn--primary:hover {
   background-color: var(--accent-hover);
   border-color: var(--accent-hover);
+  box-shadow: var(--shadow-8);
 }
 
 .fluent-btn--primary:active {
@@ -99,4 +101,16 @@
 
 .fluent-btn--subtle:active {
   background-color: var(--color-neutral-stroke-2);
+}
+
+/* Icon-only sizing + fully-round shape, composable with any variant above,
+ * e.g. class="fluent-btn fluent-btn--primary fluent-btn--icon fluent-btn--circular". */
+.fluent-btn--icon {
+  padding: 0;
+  width: 40px;
+  height: 40px;
+}
+
+.fluent-btn--circular {
+  border-radius: var(--radius-circular);
 }

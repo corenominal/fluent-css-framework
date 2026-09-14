@@ -2,8 +2,8 @@
 
 :root {
   --radius-none: 0;
-  --radius-small: 4px; /* controls */
-  --radius-medium: 8px; /* cards, dialogs */
-  --radius-large: 12px; /* large surfaces */
+  --radius-small: 4px; /* form controls */
+  --radius-medium: 8px; /* buttons, menus, tooltips, dropdown items */
+  --radius-large: 12px; /* cards, dialogs, panels, alerts, lists */
   --radius-circular: 9999px; /* pills, avatars */
 }

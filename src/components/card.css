@@ -1,11 +1,14 @@
-/* .fluent-card — an elevated surface; --interactive adds hover elevation for clickable cards. */
+/* .fluent-card — an elevated surface; --interactive adds hover elevation for
+ * clickable cards. The root clips its own corners (border-radius +
+ * overflow:hidden) so an edge-to-edge .fluent-card__image is clipped to
+ * match — never round the image independently. */
 
 .fluent-card {
   background-color: var(--color-neutral-bg-1);
   border: 1px solid var(--color-neutral-stroke-2);
-  border-radius: var(--radius-medium);
-  padding: var(--spacing-l);
-  box-shadow: var(--shadow-2);
+  border-radius: var(--radius-large);
+  overflow: hidden;
+  box-shadow: var(--shadow-8);
   transition: box-shadow var(--duration-normal) var(--easing-standard);
 }
 
@@ -14,7 +17,68 @@
 }
 
 .fluent-card--interactive:hover {
-  box-shadow: var(--shadow-8);
+  box-shadow: var(--shadow-16);
+}
+
+/* Left accent stripe (Light pillar) — pass a custom color per-instance,
+ * e.g. style="--card-accent-color: var(--color-success)". Uses
+ * border-inline-start (not border-left) for RTL safety; the stripe's
+ * corners follow the card's own border-radius automatically since the
+ * root already clips via overflow:hidden. */
+.fluent-card--accent-start {
+  --card-accent-color: var(--accent);
+  border-inline-start: 4px solid var(--card-accent-color);
+}
+
+.fluent-card__body {
+  padding: var(--spacing-l);
+}
+
+/* Top-image header. Direct child of .fluent-card — sits flush against the
+ * card edges so the root's overflow:hidden clips its corners. */
+.fluent-card__image {
+  /* Fluent 2 doesn't specify a canonical card image ratio; 16/9 is a
+   * common default — verify against real Fluent guidance. Override
+   * per-instance, e.g. style="--fluent-card-image-aspect-ratio: 1 / 1". */
+  --fluent-card-image-aspect-ratio: 16 / 9;
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: var(--fluent-card-image-aspect-ratio);
+  object-fit: cover;
+}
+
+/* Positioning context for the overlay variant only. An <img> can't contain
+ * child nodes, so .fluent-card__image-overlay is an absolutely-positioned
+ * sibling scoped to the image via this wrapper. */
+.fluent-card__media {
+  position: relative;
+}
+
+.fluent-card__image-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: var(--spacing-l);
+  /* Fixed scrim (not theme-swapped): it exists for contrast against the
+   * photo, not the page background — same reasoning as the fixed
+   * --color-tooltip-bg chip in colors.css. */
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.75) 0%,
+    rgba(0, 0, 0, 0.35) 55%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  color: var(--color-tooltip-foreground);
+}
+
+/* .fluent-card__header self-declares --color-neutral-foreground-1, which
+ * flips per theme and would be illegible against the fixed dark scrim in
+ * light mode — pin it to the fixed white used above. */
+.fluent-card__image-overlay .fluent-card__header {
+  color: inherit;
 }
 
 .fluent-card__header {

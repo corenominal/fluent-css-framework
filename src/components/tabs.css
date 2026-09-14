@@ -49,3 +49,35 @@
   border-radius: var(--radius-small) var(--radius-small) 0 0;
   background-color: var(--accent);
 }
+
+/*
+ * .fluent-tabs--pill — segmented-control variant: an accent-filled pill
+ * replaces the underline. Add alongside .fluent-tabs:
+ * <div class="fluent-tabs fluent-tabs--pill" role="tablist">...
+ */
+.fluent-tabs--pill {
+  display: inline-flex;
+  gap: var(--spacing-xxs);
+  padding: var(--spacing-xxs);
+  border-bottom: none;
+  background-color: var(--color-neutral-bg-2);
+  border-radius: var(--radius-circular);
+}
+
+.fluent-tabs--pill .fluent-tab {
+  border-radius: var(--radius-circular);
+  padding: var(--spacing-xs) var(--spacing-m);
+  transition: color var(--duration-fast) var(--easing-standard),
+    background-color var(--duration-fast) var(--easing-standard);
+}
+
+.fluent-tabs--pill .fluent-tab[aria-selected="true"],
+.fluent-tabs--pill .fluent-tab--active {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.fluent-tabs--pill .fluent-tab[aria-selected="true"]::after,
+.fluent-tabs--pill .fluent-tab--active::after {
+  content: none;
+}
